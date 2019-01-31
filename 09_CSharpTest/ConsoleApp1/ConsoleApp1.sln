@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEventArgs", "..\TestEve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Int16short", "..\Int16short\Int16short\Int16short.csproj", "{4C7EF303-AEA8-40AA-9366-607413350E16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs1", "..\EventArgs1\EventArgs1\EventArgs1.csproj", "{3B2DB626-F0E2-48F5-8912-0D416B72CCC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs2", "..\EventArgs2\EventArgs2\EventArgs2.csproj", "{5FAC462E-2C3D-4EA1-852C-478904E5C2CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{4C7EF303-AEA8-40AA-9366-607413350E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C7EF303-AEA8-40AA-9366-607413350E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C7EF303-AEA8-40AA-9366-607413350E16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B2DB626-F0E2-48F5-8912-0D416B72CCC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B2DB626-F0E2-48F5-8912-0D416B72CCC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B2DB626-F0E2-48F5-8912-0D416B72CCC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B2DB626-F0E2-48F5-8912-0D416B72CCC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FAC462E-2C3D-4EA1-852C-478904E5C2CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FAC462E-2C3D-4EA1-852C-478904E5C2CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FAC462E-2C3D-4EA1-852C-478904E5C2CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FAC462E-2C3D-4EA1-852C-478904E5C2CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
