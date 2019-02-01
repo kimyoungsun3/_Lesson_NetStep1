@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs1", "..\EventArgs1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs2", "..\EventArgs2\EventArgs2\EventArgs2.csproj", "{5FAC462E-2C3D-4EA1-852C-478904E5C2CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs3_Callback", "..\EventArgs3_Callback\EventArgs3_Callback\EventArgs3_Callback.csproj", "{49E45902-4DB7-460A-B40A-F60FA23F554C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{5FAC462E-2C3D-4EA1-852C-478904E5C2CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FAC462E-2C3D-4EA1-852C-478904E5C2CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FAC462E-2C3D-4EA1-852C-478904E5C2CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49E45902-4DB7-460A-B40A-F60FA23F554C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49E45902-4DB7-460A-B40A-F60FA23F554C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49E45902-4DB7-460A-B40A-F60FA23F554C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49E45902-4DB7-460A-B40A-F60FA23F554C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
