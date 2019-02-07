@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeServer5", "TimeServer5\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeServer6", "TimeServer6\TimeServer6.csproj", "{0116F58C-3512-41C9-BEE9-CC6BBC2291D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeServer7", "..\TimeServer7\TimeServer7\TimeServer7.csproj", "{57FA165F-7870-4E2D-9B84-22E6B2EE8AD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0116F58C-3512-41C9-BEE9-CC6BBC2291D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0116F58C-3512-41C9-BEE9-CC6BBC2291D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0116F58C-3512-41C9-BEE9-CC6BBC2291D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57FA165F-7870-4E2D-9B84-22E6B2EE8AD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57FA165F-7870-4E2D-9B84-22E6B2EE8AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57FA165F-7870-4E2D-9B84-22E6B2EE8AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57FA165F-7870-4E2D-9B84-22E6B2EE8AD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

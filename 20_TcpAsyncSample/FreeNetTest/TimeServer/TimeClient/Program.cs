@@ -38,12 +38,17 @@ namespace TimeClient
 				int _rec = clientSocket.Receive(_receiveBuffer);
 				byte[] _data = new byte[_rec];
 				Array.Copy(_receiveBuffer, _data, _rec);
+
 				_time = DateTime.Now - _start;
-				Console.WriteLine("[C <- S] ({0}/s):{1}", _time.TotalMilliseconds, Encoding.ASCII.GetString(_data));
+				if(_time.TotalMilliseconds > 0)
+				{
+					Console.WriteLine(" start:{0} end:{0}", _start, DateTime.Now);
+				}
+				Console.WriteLine("[C <- S] ({0}/ms):{1}", _time.TotalMilliseconds, Encoding.ASCII.GetString(_data));
 
 
 
-				System.Threading.Thread.Sleep(50);
+				System.Threading.Thread.Sleep(500);
 
 			}
 		}
