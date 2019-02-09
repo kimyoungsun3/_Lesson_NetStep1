@@ -45,7 +45,7 @@ namespace TimeServer7
 
 		private Socket acceptSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private SocketAsyncEventArgs acceptArgs;
-		public List<CUserToken> listUser = new List<CUserToken>();
+		public List<CUserToken> listConnectUser = new List<CUserToken>();
 
 		static void Main(string[] args)
 		{
@@ -103,7 +103,7 @@ namespace TimeServer7
 			//---------------------------------------
 			CUserToken _token = listFreeUser.Dequeue();
 			_token.SetSocket(_clientSocket);
-			listUser.Add(_token);
+			listConnectUser.Add(_token);
 
 			bool _bReceiveRegister = _token.socket.ReceiveAsync(_token.receiveArgs);
 			if (_bReceiveRegister)
@@ -115,7 +115,7 @@ namespace TimeServer7
 				//등록하자마자 데이타 받음...
 				OnReceiveCallback(null, _token.receiveArgs);
 			}
-			Console.WriteLine("connect free:{0} use:{1}", listFreeUser.Count, listUser.Count);
+			Console.WriteLine("connect free:{0} use:{1}", listFreeUser.Count, listConnectUser.Count);
 		}
 
 		void OnReceiveCallback(object _obj, SocketAsyncEventArgs _receiveArgs)
@@ -182,10 +182,10 @@ namespace TimeServer7
 				_token.socket = null;
 				lock (lockListUser)
 				{
-					listUser.Remove(_token);
+					listConnectUser.Remove(_token);
 				}
 				listFreeUser.Enqueue(_token);
-				Console.WriteLine("release free:{0} use:{1}", listFreeUser.Count, listUser.Count);
+				Console.WriteLine("release free:{0} use:{1}", listFreeUser.Count, listConnectUser.Count);
 			}
 		}
 

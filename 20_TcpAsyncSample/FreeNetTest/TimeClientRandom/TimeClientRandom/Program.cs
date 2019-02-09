@@ -5,7 +5,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 
-namespace TimeClient
+namespace TimeClientRandom
 {
 	class Program
 	{
@@ -17,40 +17,6 @@ namespace TimeClient
 			_p.LoopConnect();
 			_p.SendLoop();
 			//Console.ReadKey();
-		}
-
-		void SendLoop()
-		{
-			DateTime _start;
-			TimeSpan _time;
-			while (true)
-			{
-				//Console.WriteLine("Enter a request:");
-				//string _reg = Console.ReadLine();
-
-				_start = DateTime.Now;
-
-				byte[] _buffer = Encoding.ASCII.GetBytes("get time");
-				clientSocket.Send(_buffer);
-				Console.WriteLine("[C -> S] : {0}", Encoding.ASCII.GetString(_buffer));
-
-				byte[] _receiveBuffer = new byte[1024];
-				int _rec = clientSocket.Receive(_receiveBuffer);
-				byte[] _data = new byte[_rec];
-				Array.Copy(_receiveBuffer, _data, _rec);
-
-				_time = DateTime.Now - _start;
-				if(_time.TotalMilliseconds > 0)
-				{
-					Console.WriteLine(" start:{0} end:{0}", _start, DateTime.Now);
-				}
-				Console.WriteLine("[C <- S] ({0}/ms):{1}", _time.TotalMilliseconds, Encoding.ASCII.GetString(_data));
-
-
-
-				System.Threading.Thread.Sleep(500);
-
-			}
 		}
 
 		void LoopConnect()
@@ -68,9 +34,41 @@ namespace TimeClient
 					Console.WriteLine("Connection attempts:" + _attempts);
 				}
 			}
-
 			Console.Clear();
-			Console.WriteLine("Connected");
+			Console.WriteLine("Connect");
+		}
+
+		void SendLoop()
+		{
+			DateTime _start;
+			TimeSpan _time;
+			Random _rand = new Random();
+			byte[] _receiveBuffer = new byte[1024];
+			byte[] _buffer = Encoding.ASCII.GetBytes("get time");
+			int _loopCount = 0;
+			while (true)
+			{
+				_start = DateTime.Now;
+				_loopCount++;
+
+				clientSocket.Send(_buffer);
+				//Console.WriteLine("[C -> S] : {0} ", Encoding.ASCII.GetString(_buffer));
+
+				int _rec = clientSocket.Receive(_receiveBuffer);
+				byte[] _data = new byte[_rec];
+				Array.Copy(_receiveBuffer, _data, _rec);
+
+				_time = DateTime.Now - _start;
+				if(_time.TotalMilliseconds > 0)
+				{
+					Console.WriteLine(" start:{0} end:{0}", _start, DateTime.Now);
+				}
+				if(_loopCount % 100 == 0)
+					Console.WriteLine("[C <- S] ({0}/ms):{1}", _time.TotalMilliseconds, Encoding.ASCII.GetString(_data));
+
+				int _sleep = 10 + _rand.Next() % 50;
+				System.Threading.Thread.Sleep(_sleep);
+			}
 		}
 	}
 }
