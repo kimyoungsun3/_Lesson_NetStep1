@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs5", "..\EventArgs5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs6", "..\EventArgs6\EventArgs6\EventArgs6.csproj", "{E8C5EB1B-7023-4974-AF87-802D41B51CE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingBuffer", "..\CircleQueue\CircleQueue\RingBuffer.csproj", "{2062FF02-305D-475B-9B8C-30EEE613CA46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{E8C5EB1B-7023-4974-AF87-802D41B51CE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8C5EB1B-7023-4974-AF87-802D41B51CE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8C5EB1B-7023-4974-AF87-802D41B51CE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2062FF02-305D-475B-9B8C-30EEE613CA46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2062FF02-305D-475B-9B8C-30EEE613CA46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2062FF02-305D-475B-9B8C-30EEE613CA46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2062FF02-305D-475B-9B8C-30EEE613CA46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
