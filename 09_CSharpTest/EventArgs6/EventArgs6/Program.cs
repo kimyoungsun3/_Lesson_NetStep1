@@ -82,11 +82,13 @@ namespace EventArgs6
 				_kind = _rand.Next() % 3;
 				switch (_kind)
 				{
+
 					case 0: acceptArgs.RunComplete(this);	break;
 					case 1: receiveArgs.RunComplete(this);	break;
 					case 2: sendArgs.RunComplete(this);		break;
 				}
-				System.Threading.Thread.Sleep(500);
+
+				System.Threading.Thread.Sleep(100);
 			}
 		}
 	}

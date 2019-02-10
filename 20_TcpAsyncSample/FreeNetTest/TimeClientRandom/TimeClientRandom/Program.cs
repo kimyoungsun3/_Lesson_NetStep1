@@ -7,6 +7,11 @@ using System.Net.Sockets;
 
 namespace TimeClientRandom
 {
+	class Protocol
+	{
+		public const bool DEBUG = false;
+	}
+
 	class Program
 	{
 		private Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -59,14 +64,20 @@ namespace TimeClientRandom
 				Array.Copy(_receiveBuffer, _data, _rec);
 
 				_time = DateTime.Now - _start;
-				if(_time.TotalMilliseconds > 0)
+				if (Protocol.DEBUG)
 				{
-					Console.WriteLine(" start:{0} end:{0}", _start, DateTime.Now);
-				}
-				if(_loopCount % 100 == 0)
+					if (_time.TotalMilliseconds > 0)
+					{
+						Console.WriteLine(" start:{0} end:{1}", _start, DateTime.Now);
+					}
 					Console.WriteLine("[C <- S] ({0}/ms):{1}", _time.TotalMilliseconds, Encoding.ASCII.GetString(_data));
+				}
+				if (_time.TotalMilliseconds > 1)
+				{
+					Console.WriteLine(" start:{0} end:{1} ({2}/ms)", _start, DateTime.Now, _time.TotalMilliseconds);
+				}
 
-				int _sleep = 10 + _rand.Next() % 50;
+				int _sleep = 5 + _rand.Next() % 30;
 				System.Threading.Thread.Sleep(_sleep);
 			}
 		}

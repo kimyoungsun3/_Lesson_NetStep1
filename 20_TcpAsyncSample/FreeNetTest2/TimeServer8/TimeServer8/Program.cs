@@ -7,6 +7,11 @@ using System.Net.Sockets;
 
 namespace TimeServer8
 {
+	class Protocol
+	{
+		public const bool DEBUG	= true;
+	}
+
 	class Program
 	{
 		static void Main(string[] args)
@@ -54,7 +59,7 @@ namespace TimeServer8
 			bool _bAccept = acceptSocket.AcceptAsync(acceptArgs);
 			if(_bAccept == false)
 			{
-				Console.WriteLine("@@@@ 접속등록하자마자 > 바로접속");
+				if(Protocol.DEBUG) Console.WriteLine("@@@@ 접속등록하자마자 > 바로접속");
 				OnAcceptAsync(null, acceptArgs);
 			}
 		}
@@ -70,7 +75,7 @@ namespace TimeServer8
 			Socket _acceptSocket = (Socket)_obj;
 			_acceptArgs.AcceptSocket = null;
 			acceptSocket.AcceptAsync(_acceptArgs);
-			Console.WriteLine(((Socket)_obj == acceptSocket) + ":" + (acceptArgs == _acceptArgs));
+			if (Protocol.DEBUG) Console.WriteLine(((Socket)_obj == acceptSocket) + ":" + (acceptArgs == _acceptArgs));
 
 			//---------------------------------------
 			//접속에 따른 소켓만 꺼내고 받기 다시 대기모드로 보내버림...
@@ -89,7 +94,7 @@ namespace TimeServer8
 			else
 			{
 				//등록하자마자 바로 데이타 받음...
-				Console.WriteLine("[{0}]@@@@ OnAcceptAsync 메세지 받기(1) 등록하자마사 바로 받음.", _token.identityID);
+				if (Protocol.DEBUG) Console.WriteLine("[{0}]@@@@ OnAcceptAsync 메세지 받기(1) 등록하자마사 바로 받음.", _token.identityID);
 				OnReceiveAsync(null, _token.receiveArgs);
 			}
 			Console.WriteLine("[{0}]connect free:{1} use:{2}", _token.identityID, listFreeUser.Count, listConnectUser.Count);
@@ -98,7 +103,7 @@ namespace TimeServer8
 		void OnReceiveAsync(object _obj, SocketAsyncEventArgs _receiveArgs)
 		{
 			CUserToken _token = _receiveArgs.UserToken as CUserToken;
-			Console.WriteLine("[{0}] >> socket:{1} BytesTransferred:{2} ", _token.identityID, _token.socket.Connected, _receiveArgs.BytesTransferred);
+			if (Protocol.DEBUG) Console.WriteLine("[{0}] >> socket:{1} BytesTransferred:{2} ", _token.identityID, _token.socket.Connected, _receiveArgs.BytesTransferred);
 			//if (_receiveArgs.LastOperation == SocketAsyncOperation.Receive)
 			//{
 			//	return;
@@ -115,7 +120,7 @@ namespace TimeServer8
 				int _transferred = _receiveArgs.BytesTransferred;
 				Array.Copy(_receiveArgs.Buffer, _receiveArgs.Offset, _token.receiveBuffer2, 0, _transferred);
 				bool _bReceive = _socket.ReceiveAsync(_receiveArgs);
-				Console.WriteLine("[{0}] _bReceive {1} {2}", _token.identityID, _bReceive, _socket.Connected);
+				if (Protocol.DEBUG) Console.WriteLine("[{0}] _bReceive {1} {2}", _token.identityID, _bReceive, _socket.Connected);
 				if (_bReceive)
 				{
 					//메세지 받기 정상등록됨...
@@ -123,7 +128,7 @@ namespace TimeServer8
 				else
 				{
 					//등록하자마사 바로 데이타 받음...
-					Console.WriteLine("[{0}] @@@@ OnReceiveAsync 메세지 받기(2) 등록하자마사 바로 받음.{1}", _token.identityID, _socket.Connected);
+					if (Protocol.DEBUG) Console.WriteLine("[{0}] @@@@ OnReceiveAsync 메세지 받기(2) 등록하자마사 바로 받음.{1}", _token.identityID, _socket.Connected);
 					OnReceiveAsync(null, _receiveArgs);
 				}
 
@@ -146,7 +151,7 @@ namespace TimeServer8
 				_sendArgs.SetBuffer(_sendArgs.Offset, _sendSize);
 
 				bool _bSend = _socket.SendAsync(_sendArgs);
-				Console.WriteLine("[{0}] _bSend {1} {2}", _token.identityID, _bSend, _socket.Connected);
+				if (Protocol.DEBUG) Console.WriteLine("[{0}] _bSend {1} {2}", _token.identityID, _bSend, _socket.Connected);
 				if (_bSend)
 				{
 					//정상등록...
@@ -154,7 +159,7 @@ namespace TimeServer8
 				else
 				{
 
-					Console.WriteLine("[{0}] @@@@ OnReceiveAsync(SendAsync) -> 보내기(1) 등록하자마사 바로 받음.{1}", _token.identityID, _socket.Connected);
+					if (Protocol.DEBUG) Console.WriteLine("[{0}] @@@@ OnReceiveAsync(SendAsync) -> 보내기(1) 등록하자마사 바로 받음.{1}", _token.identityID, _socket.Connected);
 					OnSendAsync(_socket, _sendArgs);
 				}
 			}
