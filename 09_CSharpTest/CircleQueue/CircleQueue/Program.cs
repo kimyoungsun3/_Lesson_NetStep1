@@ -26,10 +26,10 @@ namespace CircleQueue
 		public bool Push(T[] _srcBuffer, int _srcOffset, int _srcLength)
 		{
 			bool _rtn = false;
-			if (_srcBuffer == null) return _rtn;
+			if (_srcBuffer == null || _srcLength <= 0 ) return _rtn;
 
-			//1. 사용공간 + 넣을공간 < 남은 공간
-			if(count + _srcLength <= buffer.Length)
+			//1. 사용공간 + 넣을공간 < 남은 공간.
+			if (count + _srcLength <= buffer.Length)
 			{
 				if (head + _srcLength <= buffer.Length)
 				{
