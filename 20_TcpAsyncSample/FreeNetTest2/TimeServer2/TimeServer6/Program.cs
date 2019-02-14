@@ -64,7 +64,7 @@ namespace TimeServer6
 		{
 			Console.Title = "Time Server6(pooling)";
 			Program _p = new Program();
-			_p.StartupServer(2000);
+			_p.StartupServer(100);
 
 			while (true)
 			{

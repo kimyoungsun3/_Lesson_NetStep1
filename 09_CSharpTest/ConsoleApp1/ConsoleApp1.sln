@@ -29,6 +29,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs6", "..\EventArgs6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingBuffer", "..\CircleQueue\CircleQueue\RingBuffer.csproj", "{2062FF02-305D-475B-9B8C-30EEE613CA46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs7_Callback", "..\EventArgs7_Callback\EventArgs7_Callback\EventArgs7_Callback.csproj", "{10D777A4-50B9-4CD2-9ADF-51C8F2949AFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LargeMemory", "..\LargeMemory\LargeMemory\LargeMemory.csproj", "{F7816CAD-3749-4094-8AFA-A0C70A348445}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,14 @@ Global
 		{2062FF02-305D-475B-9B8C-30EEE613CA46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2062FF02-305D-475B-9B8C-30EEE613CA46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2062FF02-305D-475B-9B8C-30EEE613CA46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10D777A4-50B9-4CD2-9ADF-51C8F2949AFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10D777A4-50B9-4CD2-9ADF-51C8F2949AFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10D777A4-50B9-4CD2-9ADF-51C8F2949AFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10D777A4-50B9-4CD2-9ADF-51C8F2949AFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7816CAD-3749-4094-8AFA-A0C70A348445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7816CAD-3749-4094-8AFA-A0C70A348445}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7816CAD-3749-4094-8AFA-A0C70A348445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7816CAD-3749-4094-8AFA-A0C70A348445}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

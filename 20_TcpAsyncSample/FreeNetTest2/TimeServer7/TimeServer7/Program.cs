@@ -51,7 +51,7 @@ namespace TimeServer7
 		{
 			Console.Title = "Time Server7";
 			Program _p = new Program();
-			_p.StartupServer(2000);
+			_p.StartupServer(100);
 
 			while (true)
 			{

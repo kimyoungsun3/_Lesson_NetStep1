@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{39670266-523F-40EE-9F0A-5B083A6A0E9B}</ProjectGuid>
+    <ProjectGuid>{DF85843E-1ACB-48D1-A4F2-DFD7459133F8}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TimeServer</RootNamespace>
-    <AssemblyName>TimeServer</AssemblyName>
+    <RootNamespace>TimeServer10</RootNamespace>
+    <AssemblyName>TimeServer10</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,9 +42,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{39670266-523F-40EE-9F0A-5B083A6A0E9B}</ProjectGuid>
+    <ProjectGuid>{10D777A4-50B9-4CD2-9ADF-51C8F2949AFE}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TimeServer</RootNamespace>
-    <AssemblyName>TimeServer</AssemblyName>
+    <RootNamespace>EventArgs7_Callback</RootNamespace>
+    <AssemblyName>EventArgs7_Callback</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,9 +42,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

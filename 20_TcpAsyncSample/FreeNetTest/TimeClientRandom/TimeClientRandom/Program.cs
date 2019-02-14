@@ -77,7 +77,7 @@ namespace TimeClientRandom
 					Console.WriteLine(" start:{0} end:{1} ({2}/ms)", _start, DateTime.Now, _time.TotalMilliseconds);
 				}
 
-				int _sleep = 5 + _rand.Next() % 30;
+				int _sleep = 10 + _rand.Next() % 20;
 				System.Threading.Thread.Sleep(_sleep);
 			}
 		}

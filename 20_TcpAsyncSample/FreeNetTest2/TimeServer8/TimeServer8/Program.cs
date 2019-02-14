@@ -9,7 +9,7 @@ namespace TimeServer8
 {
 	class Protocol
 	{
-		public const bool DEBUG	= true;
+		public const bool DEBUG	= false;
 	}
 
 	class Program
@@ -18,7 +18,7 @@ namespace TimeServer8
 		{
 			Console.Title = "TimeServer8";
 			Program _p = new Program();
-			_p.StartupServer(2000);
+			_p.StartupServer(100);
 			while (true)
 			{
 				System.Threading.Thread.Sleep(1000);
@@ -104,11 +104,7 @@ namespace TimeServer8
 		{
 			CUserToken _token = _receiveArgs.UserToken as CUserToken;
 			if (Protocol.DEBUG) Console.WriteLine("[{0}] >> socket:{1} BytesTransferred:{2} ", _token.identityID, _token.socket.Connected, _receiveArgs.BytesTransferred);
-			//if (_receiveArgs.LastOperation == SocketAsyncOperation.Receive)
-			//{
-			//	return;
-			//}
-			///else 
+
 			if (_receiveArgs.BytesTransferred > 0 && _receiveArgs.SocketError == SocketError.Success)
 			{
 				SocketAsyncEventArgs _sendArgs = _token.sendArgs;
