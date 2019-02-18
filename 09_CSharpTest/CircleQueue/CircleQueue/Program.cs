@@ -5,13 +5,15 @@ using System.Text;
 
 namespace CircleQueue
 {
-	public class RingBuffer<T>
+	public class RingBuffer
 	{
-		private T[] buffer;
+		private byte[] buffer;
+		//private byte[] buffer2;
+		//private byte[] buffer4;
 		int head, tail, count;
 		public RingBuffer(int _length)
 		{
-			buffer		= new T[_length];
+			buffer		= new byte[_length];
 			Clear();
 		}
 
@@ -21,9 +23,14 @@ namespace CircleQueue
 			count = 0;
 		}
 
+		public bool IsReceiveData()
+		{
+			return count >= 2;
+		}
+
 		//public int Length { get { return buffer.Length; } }
 
-		public bool Push(T[] _srcBuffer, int _srcOffset, int _srcLength)
+		public bool Push(byte[] _srcBuffer, int _srcOffset, int _srcLength)
 		{
 			bool _rtn = false;
 			if (_srcBuffer == null || _srcLength <= 0 ) return _rtn;
@@ -60,12 +67,40 @@ namespace CircleQueue
 			return _rtn;
 		}
 
-		public bool Pop(ref T[] _target)
+		void OffSet(int _size)
 		{
-			bool _rtn = false;
-			
+			head += _size;
+			tail += _size;
+			head = head >= buffer.Length ? 0 : head;
+			tail = tail >= buffer.Length ? 0 : tail;
+			count -= _size;
+		}
 
-			return _rtn;
+
+		public int Count		{	get { return count; }				}
+		public int GetSize()	{	return Util.GetShort(buffer, tail);	}
+		public void ReadData(out byte[] _buf, int _size)
+		{
+			_buf = null;
+			if (count < 4) return;
+			_buf = new byte[_size];
+
+			int _end = tail + _size;
+			if(_end >= buffer.Length)
+			{
+				// 한번 순환...
+				int _size2 = buffer.Length - _end;
+				int _size1 = _size - _size2;
+				Array.Copy(buffer, tail,	_buf,      0, _size1);
+				Array.Copy(buffer, 0,		_buf, _size1, _size2);
+			}
+			else
+			{
+				//통으로 읽을수 있음...
+				Array.Copy(buffer, tail, _buf, 0, _size);
+			}
+
+			OffSet(_size);
 		}
 	}
 
@@ -79,10 +114,12 @@ namespace CircleQueue
 			_p.Test2();
 			_p.Test4();
 			_p.Test8();
+
+			_p.TestReadAndParse();
 		}
 
-		RingBuffer<byte> ringBuffer = new RingBuffer<byte>(6);
-		byte[] _tmp = new byte[]{	1, 2, 3, 4, 5, 6, 7, 8 };
+		RingBuffer ringBuffer = new RingBuffer(10);
+		byte[] _tmp = new byte[]{	4, 0, 1, 0, 4, 0, 2, 0, 4, 0 };
 		void Test1()
 		{
 			Console.WriteLine("test1");
@@ -110,6 +147,37 @@ namespace CircleQueue
 			ringBuffer.Clear();
 			for (int i = 0; i < _tmp.Length; i += 8)
 				ringBuffer.Push(_tmp, i, 8);
+		}
+
+		void TestReadAndParse()
+		{
+			Console.WriteLine("TestReadAndParse");
+			ringBuffer.Clear();
+			ringBuffer.Push(_tmp, 0, 8);
+			while(ringBuffer.IsReceiveData())
+			{
+				int _size = ringBuffer.GetSize();
+				int _code = -1;
+				
+				if( _size >= 4 )
+				{
+					if (_size > ringBuffer.Count)
+					{
+						Console.WriteLine("Head Data Receive and Body Not Receive");
+						break;
+						//for (int i = 0; i < 2; i++)
+						//	ringBuffer.Push(_tmp, i, 1);
+					}
+					else
+					{
+						byte[] _buf;
+						ringBuffer.ReadData(out _buf, _size);
+						_code = Util.GetShort(_buf, 2);
+					}
+				}
+				Console.WriteLine("size:{0} code:{1}", _size, _code);
+			}
+			//ringBuffer.IsData()
 		}
 	}
 }

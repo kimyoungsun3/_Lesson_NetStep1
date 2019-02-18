@@ -140,7 +140,7 @@ namespace TimeServer10
 			//-------------------------------------------------------------------
 
 			bool _bReceive = _clientSocket.ReceiveAsync(_token.receiveArgs);
-			_bReceive = _clientSocket.ReceiveAsync(_token.receiveArgs);
+			//_bReceive = _clientSocket.ReceiveAsync(_token.receiveArgs);
 			if (_bReceive == false)
 			{
 				//50  대기중 발생안함
