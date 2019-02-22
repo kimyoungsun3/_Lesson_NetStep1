@@ -33,6 +33,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs7_Callback", "..\E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LargeMemory", "..\LargeMemory\LargeMemory\LargeMemory.csproj", "{F7816CAD-3749-4094-8AFA-A0C70A348445}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "100_AsyncRun", "..\100_AsyncRun\100_AsyncRun\100_AsyncRun.csproj", "{AE6F17E6-E274-4AAF-880F-C743F80A8E3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "101_ForeachDelegate", "..\101_ForeachDelegate\101_ForeachDelegate\101_ForeachDelegate.csproj", "{A778A88B-942A-4943-AD74-AF6E2CDFE52D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +103,14 @@ Global
 		{F7816CAD-3749-4094-8AFA-A0C70A348445}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7816CAD-3749-4094-8AFA-A0C70A348445}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7816CAD-3749-4094-8AFA-A0C70A348445}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE6F17E6-E274-4AAF-880F-C743F80A8E3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE6F17E6-E274-4AAF-880F-C743F80A8E3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE6F17E6-E274-4AAF-880F-C743F80A8E3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE6F17E6-E274-4AAF-880F-C743F80A8E3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A778A88B-942A-4943-AD74-AF6E2CDFE52D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A778A88B-942A-4943-AD74-AF6E2CDFE52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A778A88B-942A-4943-AD74-AF6E2CDFE52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A778A88B-942A-4943-AD74-AF6E2CDFE52D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
