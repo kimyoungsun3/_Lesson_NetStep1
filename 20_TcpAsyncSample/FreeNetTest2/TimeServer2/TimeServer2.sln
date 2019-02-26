@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeServer9", "..\TimeServe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeServer10", "..\TimeServer10\TimeServer10\TimeServer10.csproj", "{DF85843E-1ACB-48D1-A4F2-DFD7459133F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeServer11", "..\TimeServer11\TimeServer11\TimeServer11.csproj", "{35E5A863-6DC9-4372-8DDC-906B4E77A352}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{DF85843E-1ACB-48D1-A4F2-DFD7459133F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF85843E-1ACB-48D1-A4F2-DFD7459133F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF85843E-1ACB-48D1-A4F2-DFD7459133F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35E5A863-6DC9-4372-8DDC-906B4E77A352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35E5A863-6DC9-4372-8DDC-906B4E77A352}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35E5A863-6DC9-4372-8DDC-906B4E77A352}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35E5A863-6DC9-4372-8DDC-906B4E77A352}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
