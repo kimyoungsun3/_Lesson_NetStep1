@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
-namespace TimeClientRandom
+namespace TimeClient_04HeadBody
 {
 	class Protocol
 	{
 		public const bool DEBUG = true;
+		public const bool DEBUG_PACKET_SHOW = false;
 	}
 
 	class Program
@@ -33,7 +35,8 @@ namespace TimeClientRandom
 				{
 					_attempts++;
 					clientSocket.Connect(IPAddress.Loopback, 100);
-				}catch(SocketException _e)
+				}
+				catch (SocketException _e)
 				{
 					Console.Clear();
 					Console.WriteLine("Connection attempts:" + _attempts);
@@ -49,14 +52,40 @@ namespace TimeClientRandom
 			TimeSpan _time;
 			Random _rand = new Random();
 			byte[] _receiveBuffer = new byte[1024];
+			byte[] _sendBuffer = new byte[1024];
 			byte[] _buffer = Encoding.ASCII.GetBytes("get time");
+			byte[] _header = new byte[2];
 			int _loopCount = 0;
+			int _multiTime = 0;//10, 5, 1, 0
+			int MULTI_LOOP = 100000;
+			int _sendSize;
 			while (true)
 			{
 				_start = DateTime.Now;
 				_loopCount++;
 
-				clientSocket.Send(_buffer);
+				//---------------------------------
+				// 횟수만큼만 전송해버리기...
+				//---------------------------------
+				for (int i = 0; i < MULTI_LOOP; i++)
+				{
+					Console.WriteLine("[{0}] delay:{1} data:[{2}]", i, _multiTime, Encoding.ASCII.GetString(_buffer));
+					_buffer = Encoding.ASCII.GetBytes("get time[" + i + "]");
+					Util.SetShort(_header, 0, (short)_buffer.Length);
+
+					_sendSize = _header.Length + _buffer.Length;
+					Array.Copy(_header, 0, _sendBuffer, 0, _header.Length);
+					Array.Copy(_buffer, 0, _sendBuffer, 2, _buffer.Length);
+
+					if (Protocol.DEBUG_PACKET_SHOW)
+						for (int j = 0; j < _sendSize; j++)
+							Console.WriteLine("[{0}]={1}", j, _sendBuffer[j]);
+
+					clientSocket.Send(_sendBuffer, 0, _sendSize, SocketFlags.None);
+					if (_multiTime > 0)
+						System.Threading.Thread.Sleep(_multiTime);
+				}
+				Console.WriteLine(" >>> ");
 				if (Protocol.DEBUG) Console.WriteLine("[C -> S] : {0} ", Encoding.ASCII.GetString(_buffer));
 
 				int _rec = clientSocket.Receive(_receiveBuffer);

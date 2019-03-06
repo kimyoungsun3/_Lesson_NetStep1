@@ -5,7 +5,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 
-namespace TimeClientRandom
+namespace TimeClientMultiPackage
 {
 	class Protocol
 	{
@@ -33,7 +33,8 @@ namespace TimeClientRandom
 				{
 					_attempts++;
 					clientSocket.Connect(IPAddress.Loopback, 100);
-				}catch(SocketException _e)
+				}
+				catch (SocketException _e)
 				{
 					Console.Clear();
 					Console.WriteLine("Connection attempts:" + _attempts);
@@ -51,12 +52,25 @@ namespace TimeClientRandom
 			byte[] _receiveBuffer = new byte[1024];
 			byte[] _buffer = Encoding.ASCII.GetBytes("get time");
 			int _loopCount = 0;
+			int _multiTime = 0;//10, 5, 1, 0
+			int MULTI_LOOP = 100000;
 			while (true)
 			{
 				_start = DateTime.Now;
 				_loopCount++;
 
-				clientSocket.Send(_buffer);
+				//---------------------------------
+				// 횟수만큼만 전송해버리기...
+				//---------------------------------
+				for (int i = 0; i < MULTI_LOOP; i++)
+				{
+					Console.WriteLine("[{0}] delay:{1} data:[{2}]", i, _multiTime, Encoding.ASCII.GetString(_buffer));
+					_buffer = Encoding.ASCII.GetBytes("get time[" + i + "]");
+					clientSocket.Send(_buffer);
+					if(_multiTime > 0)
+						System.Threading.Thread.Sleep(_multiTime);
+				}
+				Console.WriteLine(" >>> ");
 				if (Protocol.DEBUG) Console.WriteLine("[C -> S] : {0} ", Encoding.ASCII.GetString(_buffer));
 
 				int _rec = clientSocket.Receive(_receiveBuffer);

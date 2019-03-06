@@ -5,20 +5,22 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 
-namespace TimeServer10
+namespace TimeServer12
 {
 	class Program
 	{
 		class Protocol
 		{
 			public const bool DEBUG = false;
+			public const bool DEBUG_PACKET = true;
+			public const bool DEBUG_PACKET_SHOW = true;
 		}
 
 		static void Main(string[] args)
 		{
-			Console.Title = "TimeServer10";
+			Console.Title = "TimeServer12";
 			Program _p = new Program();
-			_p.StartupServer(100);
+			_p.StartupServer(1000);
 			while (true)
 			{
 				System.Threading.Thread.Sleep(1000);
@@ -35,7 +37,7 @@ namespace TimeServer10
 		SocketAsyncEventArgs acceptArgs;
 		void StartupServer(int _capability)
 		{
-			Console.WriteLine("ServerTime10 pool Start");
+			Console.WriteLine("ServerTime12 pool Start");
 			capability = _capability;
 
 			//유저 받을것 풀링해두기...
@@ -50,7 +52,7 @@ namespace TimeServer10
 			//신규유저 받기 전용 소켓등록.
 			//------------------------------------
 			acceptSocket.Bind(new IPEndPoint(IPAddress.Any, 100));
-			acceptSocket.Listen(10);
+			acceptSocket.Listen(100);
 
 			acceptArgs = new SocketAsyncEventArgs();
 			acceptArgs.Completed += new EventHandler<SocketAsyncEventArgs>(OnAcceptAsync);
@@ -87,7 +89,7 @@ namespace TimeServer10
 			//---------------------------------------
 			Socket _clientSocket = _acceptArgs.AcceptSocket;
 			Socket _acceptSocket = acceptSocket;
-			_acceptArgs.AcceptSocket = null;  
+			_acceptArgs.AcceptSocket = null;
 			bool _bAccept = _acceptSocket.AcceptAsync(_acceptArgs);
 			if (Protocol.DEBUG) Console.WriteLine((_acceptSocket == acceptSocket) + ":" + (acceptArgs == _acceptArgs));
 
@@ -98,7 +100,7 @@ namespace TimeServer10
 				//50  대기중 발생안함
 				//100 대기중 발생안함
 				//120 대기중 발생안함.
-				Console.WriteLine("[{0}] >>> #### OnAcceptAsync > _acceptSocket.AcceptAsync 신규유저받기 후 다시 신규유저 들어옴...", identity);
+				Console.WriteLine("[{0}] >>> #### OnAcceptAsync2 > _acceptSocket.AcceptAsync 신규유저받기 후 다시 신규유저 들어옴...", identity);
 				OnAcceptAsync(_acceptSocket, _acceptArgs);
 			}
 
@@ -106,14 +108,14 @@ namespace TimeServer10
 			// pool -> client setting infomation
 			//---------------------------------------
 			CUserToken _token = listFreeUser.Dequeue();
-			if (_token.bProblemData)
-			{
-				//_token 문제가 있는놈이다 
-				//       > 뎅글링 클래스로 나둬버림... 
-				//       > GC가 호출해감....
-				//새것으로 다시 뺴오자..~~~
-				_token = listFreeUser.Dequeue();
-			}
+			//if (_token.bProblemData)
+			//{
+			//	//_token 문제가 있는놈이다 
+			//	//       > 뎅글링 클래스로 나둬버림... 
+			//	//       > GC가 호출해감....
+			//	//새것으로 다시 뺴오자..~~~
+			//	_token = listFreeUser.Dequeue();
+			//}
 
 			_token.socket = _clientSocket;
 			listConnectUser.Add(_token);
@@ -147,7 +149,12 @@ namespace TimeServer10
 				//100 대기중 발생안함
 				//120 대기중 발생안함.
 				//등록하자마자 바로 데이타 받음...
-				Console.WriteLine("[{0}] #### OnAcceptAsync > _clientSocket.ReceiveAsync  메세지 받기(1) 등록하자마사 바로 받음.", _token.identityID);
+				//
+				//서버가 과부하 상태에서 신규 유저 접속하자 마자 바로 종료하는 경우...
+				//100% 발생함...데이타 대량으로 오고 가는중에 발생....
+				// > 접속 종료에 대한 메세지를 받은 것임.. ㅎㅎㅎ
+				// 접속 -> 대기중... 음... 바로 -> 바로 종료.... 발생....(종료 메세지)
+				Console.WriteLine("[{0}] #### OnAcceptAsync1 > _clientSocket.ReceiveAsync  메세지 받기(1) 등록하자마사 바로 받음.", _token.identityID);
 				OnReceiveAsync(_clientSocket, _token.receiveArgs);
 			}
 			Console.WriteLine("[{0}]connect free:{1} use:{2}", _token.identityID, listFreeUser.Count, listConnectUser.Count);
@@ -156,7 +163,12 @@ namespace TimeServer10
 		void OnReceiveAsync(object _obj, SocketAsyncEventArgs _receiveArgs)
 		{
 			CUserToken _token = _receiveArgs.UserToken as CUserToken;
-			if (Protocol.DEBUG) Console.WriteLine("[{0}] >> socket:{1} BytesTransferred:{2} ", _token.identityID, _token.socket.Connected, _receiveArgs.BytesTransferred);
+			if (Protocol.DEBUG) Console.WriteLine("[{0}] OnReceiveAsync >> socket:{1} BytesTransferred:{2} LastOperation:{3} SocketError:{4}",
+				_token.identityID,
+				_token.socket.Connected,
+				_receiveArgs.BytesTransferred,
+				_receiveArgs.LastOperation,
+				_receiveArgs.SocketError);
 
 			if (_receiveArgs.LastOperation == SocketAsyncOperation.Receive
 				&& _receiveArgs.SocketError == SocketError.Success
@@ -192,7 +204,10 @@ namespace TimeServer10
 
 				//Data Parse and Send...
 				string _text = Encoding.ASCII.GetString(_token.receiveBuffer2, 0, _transferred);
+				if (Protocol.DEBUG_PACKET_SHOW) Console.WriteLine("message:{0}", _text);
+
 				string _response = string.Empty;
+				if (Protocol.DEBUG_PACKET) Console.WriteLine(_token.identityID + ":" + _text);
 				if (_text.ToLower().Equals("get time"))
 				{
 					_response = "[C <- S] OK Time Server9";
@@ -209,34 +224,40 @@ namespace TimeServer10
 				//이부분에서 130개를 넘어가면 오류가 메모리 오류...
 				//그 근처에서 메모리 오류가 먼저 발생해준다. (메모리는 충분한데... win7내 컴에서 종종 나타난다...)
 				//2G까지만 (Person win7)
-
-				bool _bSend = true;
-				try
-				{
-					_bSend = _socket.SendAsync(_sendArgs);
-				}
-				catch (Exception _e)
-				{
-					Console.WriteLine(" >>> OnReceiveAsync _socket.SendAsync _e:{0}", _e);
-					Disconnect(" <<<< ***보낼려고 하는데 어 아직 안보낸것이 있네...***", _token, true);
-					return;
-				}
-				if (Protocol.DEBUG) Console.WriteLine("[{0}] _bSend {1} {2}", _token.identityID, _bSend, _socket.Connected);
-
-
-				if (_socket.Connected == false)
-				{
-					Disconnect(" <<<< 보낼때1", _token);
-					return;
-				}
-				if (_bSend == false)
-				{
-					Console.WriteLine("[{0}] #### OnReceiveAsync _socket.SendAsync -> 보내기(1) 등록하자마사 바로 받음.{1}", _token.identityID, _socket.Connected);
-					OnSendAsync(_socket, _sendArgs);
-				}
+				//bool _bSend = true;
+				//try
+				//{
+				//	_bSend = _socket.SendAsync(_sendArgs);
+				//}
+				//catch (Exception _e)
+				//{
+				//	Console.WriteLine(" >>> OnReceiveAsync _socket.SendAsync _e:{0}", _e);
+				//	Disconnect(" <<<< ***보낼려고 하는데 어 아직 안보낸것이 있네...***", _token, true);
+				//	return;
+				//}
+				//if (Protocol.DEBUG) Console.WriteLine("[{0}] _bSend {1} {2}", _token.identityID, _bSend, _socket.Connected);
+				//
+				//
+				//if (_socket.Connected == false)
+				//{
+				//	Disconnect(" <<<< 보낼때1", _token);
+				//	return;
+				//}
+				//if (_bSend == false)
+				//{
+				//	Console.WriteLine("[{0}] #### OnReceiveAsync _socket.SendAsync -> 보내기(1) 등록하자마사 바로 받음.{1}", _token.identityID, _socket.Connected);
+				//	OnSendAsync(_socket, _sendArgs);
+				//}
 			}
 			else
 			{
+				Console.WriteLine("OnReceiveAsync [종료인듯] >>> :{0} :{1} :{2} :{3} :{4}",
+					_token.identityID,
+					_token.socket.Connected,
+					_receiveArgs.BytesTransferred,
+					_receiveArgs.LastOperation,
+					_receiveArgs.SocketError
+					);
 				Disconnect("정상", _token);
 			}
 		}
@@ -288,7 +309,7 @@ namespace TimeServer10
 			}
 			else
 			{
-				Console.WriteLine(" **** [{0}] Problem Data not return Pool *** ", (_bDebugRemake? _debugIdentity:_token.identityID));
+				Console.WriteLine(" **** [{0}] Problem Data not return Pool *** ", (_bDebugRemake ? _debugIdentity : _token.identityID));
 			}
 			Console.WriteLine(" [{0}] release branch:{3} free:{1} use:{2}", (_bDebugRemake ? _debugIdentity : _token.identityID), listFreeUser.Count, listConnectUser.Count, _branch);
 		}
@@ -296,7 +317,7 @@ namespace TimeServer10
 
 		void OnSendAsync(object _obj, SocketAsyncEventArgs _sendArgs)
 		{
-
+			Console.WriteLine("OnSendAsync");
 		}
 	}
 
