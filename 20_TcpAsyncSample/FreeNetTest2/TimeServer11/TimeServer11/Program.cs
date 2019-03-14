@@ -11,16 +11,19 @@ namespace TimeServer11
 	{
 		class Protocol
 		{
-			public const bool DEBUG = false;
+			public const bool DEBUG = true;
 			public const bool DEBUG_PACKET = true;
 			public const bool DEBUG_PACKET_SHOW = true;
+
+			public const bool DEBUG_SLEEP_ACCEPT = false;
+			public const bool DEBUG_SLEEP_PACKET = false;
 		}
 
 		static void Main(string[] args)
 		{
 			Console.Title = "TimeServer11";
 			Program _p = new Program();
-			_p.StartupServer(1000);
+			_p.StartupServer(200);
 			while (true)
 			{
 				System.Threading.Thread.Sleep(1000);
@@ -37,7 +40,7 @@ namespace TimeServer11
 		SocketAsyncEventArgs acceptArgs;
 		void StartupServer(int _capability)
 		{
-			Console.WriteLine("ServerTime11 pool Start");
+			Console.WriteLine("StartupServer 11 pool Start");
 			capability = _capability;
 
 			//유저 받을것 풀링해두기...
@@ -68,20 +71,24 @@ namespace TimeServer11
 			// TimeServer10.Program.StartupServer(Int32 _capability) 파일 D:\devtool\study\study\_Lesson_NetStep1\20_TcpAsyncSample\FreeNetTest2\TimeServer10\TimeServer10\Program.cs:줄 58
 			// TimeServer10.Program.Main(String[] args) 파일 D:\devtool\study\study\_Lesson_NetStep1\20_TcpAsyncSample\FreeNetTest2\TimeServer10\TimeServer10\Program.cs:줄 21
 			//------------------------------------------------------------------------------------------------------------------------------------
-			bool _bAccept = acceptSocket.AcceptAsync(acceptArgs);
-			if (_bAccept == false)
+			bool _bAcceptSocketAlive = acceptSocket.AcceptAsync(acceptArgs);
+			if (_bAcceptSocketAlive == false)
 			{
 				//50 대기중 발생안함
 				//100 대기중 발생안함
 				//120 대기중 발생안함.
-				Console.WriteLine("@@@@ 신규유저접속받기 등록하자마사 > 바로접속");
+				//03.10일 200회
+				//절대 안일어날듯...
+				Console.WriteLine("StartupServer >> .AcceptAsync @@@@ 신규유저접속받기 등록하자마사 > 바로접속");
 				OnAcceptAsync(acceptSocket, acceptArgs);
 			}
 		}
 
 		void OnAcceptAsync(object _obj, SocketAsyncEventArgs _acceptArgs)
 		{
-			Console.WriteLine("New Client connect");
+			if (Protocol.DEBUG_SLEEP_ACCEPT) System.Threading.Thread.Sleep(10);
+			identity++;
+			Console.WriteLine("[{0}]OnAcceptAsync (callback) New Client connect", identity);
 
 			//---------------------------------------
 			//신규접속 유저 신규소켓 > Pool에서 하나 꺼내서 달아주기.
@@ -90,17 +97,18 @@ namespace TimeServer11
 			Socket _clientSocket = _acceptArgs.AcceptSocket;
 			Socket _acceptSocket = acceptSocket;
 			_acceptArgs.AcceptSocket = null;
-			bool _bAccept = _acceptSocket.AcceptAsync(_acceptArgs);
+			bool _bAcceptSocketAlive = _acceptSocket.AcceptAsync(_acceptArgs);
 			if (Protocol.DEBUG) Console.WriteLine((_acceptSocket == acceptSocket) + ":" + (acceptArgs == _acceptArgs));
 
-			if (_bAccept == false)
+			if (_bAcceptSocketAlive == false)
 			{
 				//접속대기 등록하자마자 -> 신규유저 바로 접속은 없다
-				//
 				//50  대기중 발생안함
 				//100 대기중 발생안함
 				//120 대기중 발생안함.
-				Console.WriteLine("[{0}] >>> #### OnAcceptAsync2 > _acceptSocket.AcceptAsync 신규유저받기 후 다시 신규유저 들어옴...", identity);
+				//03-10 200회 테스트 했는데 안들어옴...
+				//절대 안들어올듯...
+				Console.WriteLine("OnAcceptAsync >> .AcceptAsync @@@@ {0} 신규유저접속받기 등록하자마사 > 바로접속", identity);
 				OnAcceptAsync(_acceptSocket, _acceptArgs);
 			}
 
@@ -119,7 +127,7 @@ namespace TimeServer11
 
 			_token.socket = _clientSocket;
 			listConnectUser.Add(_token);
-			_token.identityID = identity++;
+			_token.identityID = identity;
 
 			//-------------------------------------------------------------------
 			//	이중으로 ReceiveAsync 등록시 오류
@@ -141,9 +149,9 @@ namespace TimeServer11
 			//System.Threading._IOCompletionCallback.PerformIOCompletionCallback(UInt32 errorCode, UInt32 numBytes, NativeOverlapped * pOVERLAP)
 			//-------------------------------------------------------------------
 
-			bool _bReceive = _clientSocket.ReceiveAsync(_token.receiveArgs);
+			bool _bReciveSocketAlive = _clientSocket.ReceiveAsync(_token.receiveArgs);
 			//_bReceive = _clientSocket.ReceiveAsync(_token.receiveArgs);
-			if (_bReceive == false)
+			if (_bReciveSocketAlive == false)
 			{
 				//50  대기중 발생안함
 				//100 대기중 발생안함
@@ -154,7 +162,12 @@ namespace TimeServer11
 				//100% 발생함...데이타 대량으로 오고 가는중에 발생....
 				// > 접속 종료에 대한 메세지를 받은 것임.. ㅎㅎㅎ
 				// 접속 -> 대기중... 음... 바로 -> 바로 종료.... 발생....(종료 메세지)
-				Console.WriteLine("[{0}] #### OnAcceptAsync1 > _clientSocket.ReceiveAsync  메세지 받기(1) 등록하자마사 바로 받음.", _token.identityID);
+				Console.WriteLine("[{0}]OnAcceptAsync >> .ReceiveAsync @@@@ {0}/{1} 신규유저받고, 바로 메세지 받음", 
+					_token.identityID,
+					_token.socket.Connected,
+					_token.receiveArgs.BytesTransferred,
+					_token.receiveArgs.LastOperation,
+					_token.receiveArgs.SocketError);
 				OnReceiveAsync(_clientSocket, _token.receiveArgs);
 			}
 			Console.WriteLine("[{0}]connect free:{1} use:{2}", _token.identityID, listFreeUser.Count, listConnectUser.Count);
@@ -163,51 +176,79 @@ namespace TimeServer11
 		void OnReceiveAsync(object _obj, SocketAsyncEventArgs _receiveArgs)
 		{
 			CUserToken _token = _receiveArgs.UserToken as CUserToken;
-			if (Protocol.DEBUG) Console.WriteLine("[{0}] OnReceiveAsync >> socket:{1} BytesTransferred:{2} LastOperation:{3} SocketError:{4}", 
-				_token.identityID, 
+			int _debugWorkNum = _token.GetWorkNum();
+			if (Protocol.DEBUG)
+				Console.WriteLine("[{0}]OnReceiveAsync (callback) >> socket:{1} BytesTransferred:{2} LastOperation:{3} SocketError:{4}", 
+				_token.identityID + "/" +  _debugWorkNum, 
 				_token.socket.Connected, 
 				_receiveArgs.BytesTransferred,
 				_receiveArgs.LastOperation,
 				_receiveArgs.SocketError);
-		
+
 			if (_receiveArgs.LastOperation == SocketAsyncOperation.Receive
 				&& _receiveArgs.SocketError == SocketError.Success
 				&& _receiveArgs.BytesTransferred > 0)
 			{
 				SocketAsyncEventArgs _sendArgs	= _token.sendArgs;
-				Socket _socket					= _token.socket;
+				Socket _clientSocket					= _token.socket;
 
 				//---------------------------------------
 				// Client -> Socket -> Receive
 				//---------------------------------------
 				int _transferred = _receiveArgs.BytesTransferred;
-				Array.Copy(_receiveArgs.Buffer, _receiveArgs.Offset, _token.receiveBuffer2, 0, _transferred);
-				bool _bReceive = _socket.ReceiveAsync(_receiveArgs);
-				if (Protocol.DEBUG)Console.WriteLine("[{0}] _bReceive {1} {2}", _token.identityID, _bReceive, _socket.Connected);
+				byte[] _buffer2 = new byte[_transferred];
+				Array.Copy(_receiveArgs.Buffer, _receiveArgs.Offset, _buffer2, 0, _transferred);
+				if (Protocol.DEBUG)
+					Console.WriteLine(" [{0}] >> 등록전 _socket.Connected:{1} _transferred:{2}", _token.identityID, _clientSocket.Connected, _transferred);
 
+				bool _bDebugRececiveTrueAfter = false;
+				if(Protocol.DEBUG_SLEEP_PACKET) System.Threading.Thread.Sleep(10);
+				if (_clientSocket.Connected == false)
+				{
+					_bDebugRececiveTrueAfter = true;
+					Console.WriteLine("@@@@ 등록전 @@@@");
+					Console.WriteLine(" [{0}] >> 등록전 _socket.Connected:{1} _transferred:{2}", _token.identityID, _clientSocket.Connected, _transferred);
+				}
+				if (Protocol.DEBUG_SLEEP_PACKET) System.Threading.Thread.Sleep(10);
+				bool _bReceiveAsync = _clientSocket.ReceiveAsync(_receiveArgs);
+
+				if (Protocol.DEBUG_SLEEP_PACKET) System.Threading.Thread.Sleep(10);
+				//_bReceive = _socket.ReceiveAsync(_receiveArgs);
+				if (Protocol.DEBUG)
+					Console.WriteLine(" [{0}] >> 등록후 _socket.Connected:{2} _bReceive:{1}", _token.identityID, _bReceiveAsync, _clientSocket.Connected);
+				if (_bDebugRececiveTrueAfter)
+				{
+					Console.WriteLine("@@@@ 등록후 @@@@");
+					Console.WriteLine(" [{0}] >> 등록전 _socket.Connected:{1} _transferred:{2}", _token.identityID, _clientSocket.Connected, _transferred);
+				}
 				//--------------------------------------
 				//중간에 끼워들어옴... 음...
-				if (_socket.Connected == false)
+				if (_clientSocket.Connected == false)
 				{
 					//갑자기 종료하면 발생함....
 					//20개에서도 발생함...
-					Disconnect(" >>>> OnReceiveAsync 받을때 소켓꺼짐", _token);
+					Console.WriteLine(" [{0}]OnReceiveAsync .ReceiveAsync @@@@ 파싱중~~ 재등록후(소켓꺼짐) {1}/{2}/{3}/{4}", 
+							_token.identityID + "/" + _debugWorkNum, 
+							_token.socket.Connected, 
+							_receiveArgs.BytesTransferred,
+							_receiveArgs.LastOperation,
+							_receiveArgs.SocketError);
+					Disconnect(" @@@@@(" + _debugWorkNum + ") >> OnReceiveAsync 파싱후 재등록후(소켓꺼짐)", _token);
 					return;
 				}
 
-				if (_bReceive == false)
+				if (_bReceiveAsync == false)
 				{
 					//등록하자마사 바로 데이타 받음...
-					Console.WriteLine("[{0}] #### OnReceiveAsync > _socket.ReceiveAsync 메세지 받기(2) 등록하자마사 바로 받음.{1}", _token.identityID, _socket.Connected);
+					Console.WriteLine(" [{0}] #### OnReceiveAsync > _socket.ReceiveAsync 메세지 받기(2) 등록하자마사 바로 받음.{1}", _token.identityID, _clientSocket.Connected);
 					OnReceiveAsync(null, _receiveArgs);
 				}
 
 				//Data Parse and Send...
-				string _text = Encoding.ASCII.GetString(_token.receiveBuffer2, 0, _transferred);
-				if (Protocol.DEBUG_PACKET_SHOW) Console.WriteLine("message:{0}", _text);
+				string _text = Encoding.ASCII.GetString(_buffer2, 0, _transferred);
+				if (Protocol.DEBUG_PACKET) Console.WriteLine("[{0}]:{1}", _token.identityID + ":" + _debugWorkNum, _text);
 
 				string _response = string.Empty;
-				if (Protocol.DEBUG_PACKET)Console.WriteLine(_token.identityID+ ":" + _text);
 				if (_text.ToLower().Equals("get time"))
 				{
 					_response = "[C <- S] OK Time Server9";
@@ -251,14 +292,19 @@ namespace TimeServer11
 			}
 			else
 			{
-				Console.WriteLine("OnReceiveAsync [종료인듯] >>> :{0} :{1} :{2} :{3} :{4}", 
-					_token.identityID, 
+				Console.WriteLine("[{0}]OnReceiveAsync [정상종료] >>> :{1} :{2} :{3} :{4}",
+					_token.identityID + "/" + _debugWorkNum,
 					_token.socket.Connected, 
 					_receiveArgs.BytesTransferred,
 					_receiveArgs.LastOperation,
 					_receiveArgs.SocketError
 					);
-					Disconnect("정상", _token);
+				//if (_token.socket != null)
+				//{
+				//	bool _bReceive = _token.socket.ReceiveAsync(_receiveArgs);
+				//	Console.WriteLine(" _bReceive:" + _bReceive);
+				//}
+				Disconnect("[정상종료]", _token);
 			}
 		}
 
@@ -276,13 +322,13 @@ namespace TimeServer11
 				{
 					try
 					{
-						Console.WriteLine("[{0}] >>>>>>> socke is alive and Shutdown.Send _branch:{1}, _token:{2} _bDestroyAndRemake:{3} ", _token.identityID, _branch, _token.identityID, _bDestroyAndRemake);
+						Console.WriteLine(" [{0}] >>>>>>> socke is alive and Shutdown.Send _branch:{1}, _token:{2} _bDestroyAndRemake:{3} ", _token.identityID, _branch, _token.identityID, _bDestroyAndRemake);
 						_token.socket.Shutdown(SocketShutdown.Send);
 						_token.socket.Close();
 					}
 					catch (Exception _e)
 					{
-						Console.WriteLine("[{0}] >> remake >> _e:{1}", _token.identityID, _e);
+						Console.WriteLine(" [{0}] >> remake >> _e:{1}", _token.identityID, _e);
 						_bDestroyAndRemake = true;
 					}
 				}
@@ -297,7 +343,7 @@ namespace TimeServer11
 				_bDebugRemake = true;
 
 				_token.bProblemData = true;//기존것 null처리...
-				Console.WriteLine(" ***** Destroy:{0} and Remake:{1} *****", _token.identityID, ++destroyAndRemakeCount);
+				Console.WriteLine(" [{0}] ***** Destroy and Remake:{1} *****", _token.identityID, ++destroyAndRemakeCount);
 				_token = null;
 				_token = new CUserToken(OnReceiveAsync, OnSendAsync);
 
@@ -309,15 +355,15 @@ namespace TimeServer11
 			}
 			else
 			{
-				Console.WriteLine(" **** [{0}] Problem Data not return Pool *** ", (_bDebugRemake ? _debugIdentity : _token.identityID));
+				Console.WriteLine(" [{0}] @@@@  Problem Data not return Pool *** ", (_bDebugRemake ? _debugIdentity : _token.identityID));
 			}
-			Console.WriteLine(" [{0}] release branch:{3} free:{1} use:{2}", (_bDebugRemake ? _debugIdentity : _token.identityID), listFreeUser.Count, listConnectUser.Count, _branch);
+			Console.WriteLine(" [{0}] release {3} free:{1} use:{2}", (_bDebugRemake ? _debugIdentity : _token.identityID), listFreeUser.Count, listConnectUser.Count, _branch);
 		}
 		int destroyAndRemakeCount = 0;
 
 		void OnSendAsync(object _obj, SocketAsyncEventArgs _sendArgs)
 		{
-			Console.WriteLine("OnSendAsync");
+			Console.WriteLine("[{0}] OnSendAsync ", (_sendArgs.UserToken as CUserToken).identityID);
 		}
 	}
 
@@ -346,6 +392,12 @@ namespace TimeServer11
 			sendArgs.UserToken = this;
 		}
 
+		int workNum = 0;
+		public int GetWorkNum()
+		{
+			return workNum++;
+		}
+
 		//public int ReceiveToRead()
 		//{
 		//	int _transferred = receiveArgs.BytesTransferred;
@@ -353,10 +405,10 @@ namespace TimeServer11
 		//	return _transferred;
 		//}
 
-		public string TempGetMessage(int _transferred)
-		{
-			return Encoding.ASCII.GetString(receiveBuffer2, 0, _transferred);
-		}
+		//public string TempGetMessage(int _transferred)
+		//{
+		//	return Encoding.ASCII.GetString(receiveBuffer2, 0, _transferred);
+		//}
 
 
 		//public void SetSocket(Socket _s)

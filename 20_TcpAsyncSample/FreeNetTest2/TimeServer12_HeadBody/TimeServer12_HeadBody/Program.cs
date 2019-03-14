@@ -5,17 +5,10 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 
-namespace TimeServer12
+namespace TimeServer12_HeadBody
 {
 	class Program
 	{
-		class Protocol
-		{
-			public const bool DEBUG = false;
-			public const bool DEBUG_PACKET = true;
-			public const bool DEBUG_PACKET_SHOW = true;
-		}
-
 		static void Main(string[] args)
 		{
 			Console.Title = "TimeServer12";
@@ -82,6 +75,7 @@ namespace TimeServer12
 		void OnAcceptAsync(object _obj, SocketAsyncEventArgs _acceptArgs)
 		{
 			Console.WriteLine("New Client connect");
+			identity++;
 
 			//---------------------------------------
 			//신규접속 유저 신규소켓 > Pool에서 하나 꺼내서 달아주기.
@@ -119,7 +113,7 @@ namespace TimeServer12
 
 			_token.socket = _clientSocket;
 			listConnectUser.Add(_token);
-			_token.identityID = identity++;
+			_token.identityID = identity;
 
 			//-------------------------------------------------------------------
 			//	이중으로 ReceiveAsync 등록시 오류
@@ -180,13 +174,11 @@ namespace TimeServer12
 				//---------------------------------------
 				// Client -> Socket -> Receive
 				//---------------------------------------
-				int _transferred = _receiveArgs.BytesTransferred;
-				Array.Copy(_receiveArgs.Buffer, _receiveArgs.Offset, _token.receiveBuffer2, 0, _transferred);
+				//int _transferred = _receiveArgs.BytesTransferred;
+				//Array.Copy(_receiveArgs.Buffer, _receiveArgs.Offset, _token.receiveBuffer2, 0, _transferred);
+				_token.ReceiveRead(_receiveArgs.Buffer, _receiveArgs.Offset, _receiveArgs.BytesTransferred);
 				bool _bReceive = _socket.ReceiveAsync(_receiveArgs);
 				if (Protocol.DEBUG) Console.WriteLine("[{0}] _bReceive {1} {2}", _token.identityID, _bReceive, _socket.Connected);
-
-				//--------------------------------------
-				//중간에 끼워들어옴... 음...
 				if (_socket.Connected == false)
 				{
 					//갑자기 종료하면 발생함....
@@ -194,32 +186,33 @@ namespace TimeServer12
 					Disconnect(" >>>> OnReceiveAsync 받을때 소켓꺼짐", _token);
 					return;
 				}
-
-				if (_bReceive == false)
+				else if (_bReceive == false)
 				{
 					//등록하자마사 바로 데이타 받음...
 					Console.WriteLine("[{0}] #### OnReceiveAsync > _socket.ReceiveAsync 메세지 받기(2) 등록하자마사 바로 받음.{1}", _token.identityID, _socket.Connected);
 					OnReceiveAsync(null, _receiveArgs);
 				}
 
-				//Data Parse and Send...
-				string _text = Encoding.ASCII.GetString(_token.receiveBuffer2, 0, _transferred);
-				if (Protocol.DEBUG_PACKET_SHOW) Console.WriteLine("message:{0}", _text);
 
-				string _response = string.Empty;
-				if (Protocol.DEBUG_PACKET) Console.WriteLine(_token.identityID + ":" + _text);
-				if (_text.ToLower().Equals("get time"))
-				{
-					_response = "[C <- S] OK Time Server9";
-				}
-				else
-				{
-					_response = "[C <- S] Fail";
-				}
-				byte[] _sendBuffer2 = Encoding.ASCII.GetBytes(_response);
-				int _sendSize = _sendBuffer2.Length;
-				Array.Copy(_sendBuffer2, 0, _sendArgs.Buffer, _sendArgs.Offset, _sendSize);
-				_sendArgs.SetBuffer(_sendArgs.Offset, _sendSize);
+				////Data Parse and Send...
+				//string _text = Encoding.ASCII.GetString(_token.receiveBuffer2, 0, _transferred);
+				//if (Protocol.DEBUG_PACKET_SHOW) Console.WriteLine("message:{0}", _text);
+
+				//string _response = string.Empty;
+				//if (Protocol.DEBUG_PACKET) Console.WriteLine(_token.identityID + ":" + _text);
+				//if (_text.ToLower().Equals("get time"))
+				//{
+				//	_response = "[C <- S] OK Time Server9";
+				//}
+				//else
+				//{
+				//	_response = "[C <- S] Fail";
+				//}
+				//byte[] _sendBuffer2 = Encoding.ASCII.GetBytes(_response);
+				//int _sendSize = _sendBuffer2.Length;
+				//Array.Copy(_sendBuffer2, 0, _sendArgs.Buffer, _sendArgs.Offset, _sendSize);
+				//_sendArgs.SetBuffer(_sendArgs.Offset, _sendSize);
+				//=======================================================
 
 				//이부분에서 130개를 넘어가면 오류가 메모리 오류...
 				//그 근처에서 메모리 오류가 먼저 발생해준다. (메모리는 충분한데... win7내 컴에서 종종 나타난다...)
@@ -319,49 +312,5 @@ namespace TimeServer12
 		{
 			Console.WriteLine("OnSendAsync");
 		}
-	}
-
-	class CUserToken
-	{
-		public bool bProblemData;
-		public int identityID;
-		public Socket socket;
-		public SocketAsyncEventArgs receiveArgs, sendArgs;
-		public byte[] receiveBuffer, receiveBuffer2;
-		public byte[] sendBuffer, sendBuffer2;
-		public CUserToken(EventHandler<SocketAsyncEventArgs> _onReceiveCallback, EventHandler<SocketAsyncEventArgs> _onSendCallback)
-		{
-			receiveBuffer = new byte[1024];
-			receiveBuffer2 = new byte[1024];
-			receiveArgs = new SocketAsyncEventArgs();
-			receiveArgs.Completed += _onReceiveCallback;
-			receiveArgs.UserToken = this;
-			receiveArgs.SetBuffer(receiveBuffer, 0, receiveBuffer.Length);
-
-			sendBuffer = new byte[1024];
-			sendBuffer2 = new byte[1024];
-			sendArgs = new SocketAsyncEventArgs();
-			sendArgs.Completed += _onSendCallback;
-			sendArgs.SetBuffer(sendBuffer, 0, sendBuffer.Length);
-			sendArgs.UserToken = this;
-		}
-
-		//public int ReceiveToRead()
-		//{
-		//	int _transferred = receiveArgs.BytesTransferred;
-		//	Array.Copy(receiveArgs.Buffer, receiveArgs.Offset, receiveBuffer2, 0, _transferred);
-		//	return _transferred;
-		//}
-
-		public string TempGetMessage(int _transferred)
-		{
-			return Encoding.ASCII.GetString(receiveBuffer2, 0, _transferred);
-		}
-
-
-		//public void SetSocket(Socket _s)
-		//{
-		//	socket = _s;
-		//}
 	}
 }

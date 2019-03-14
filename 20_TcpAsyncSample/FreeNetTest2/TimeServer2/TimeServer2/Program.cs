@@ -126,7 +126,7 @@ namespace TimeServer
 
 		private void OnSendCallback(object _obj, SocketAsyncEventArgs _sendArgs)
 		{
-
+			//Console.WriteLine("OnSendCallback >>");
 		}
 	}
 }

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8D21C722-6943-4313-ABBA-9F57C67F14BA}</ProjectGuid>
+    <ProjectGuid>{8C6C2BF8-B2EB-45EE-9307-F579A597EF33}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TimeServer12_HeadBody</RootNamespace>
-    <AssemblyName>TimeServer12_HeadBody</AssemblyName>
+    <RootNamespace>TimeClient_13_Simple</RootNamespace>
+    <AssemblyName>TimeClient_13_Simple</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

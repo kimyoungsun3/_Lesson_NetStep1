@@ -18,7 +18,7 @@ namespace TimeServer10
 		{
 			Console.Title = "TimeServer10";
 			Program _p = new Program();
-			_p.StartupServer(100);
+			_p.StartupServer(1000);
 			while (true)
 			{
 				System.Threading.Thread.Sleep(1000);
@@ -237,6 +237,7 @@ namespace TimeServer10
 			}
 			else
 			{
+				Console.WriteLine(" >> " + _token.identityID);
 				Disconnect("정상", _token);
 			}
 		}

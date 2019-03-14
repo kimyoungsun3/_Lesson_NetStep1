@@ -9,6 +9,7 @@ namespace TimeClient
 {
 	class Program
 	{
+        bool DEBUG = false;
 		private Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		static void Main(string[] args)
 		{
@@ -30,9 +31,10 @@ namespace TimeClient
 
 				_start = DateTime.Now;
 
-				byte[] _buffer = Encoding.ASCII.GetBytes("get time");
-				clientSocket.Send(_buffer);
-				Console.WriteLine("[C -> S] : {0}", Encoding.ASCII.GetString(_buffer));
+				//byte[] _buffer = Encoding.ASCII.GetBytes("get time");
+                byte[] _buffer = Encoding.ASCII.GetBytes("goto x,y,z");
+                clientSocket.Send(_buffer);
+				if(DEBUG) Console.WriteLine("[C -> S] : {0}", Encoding.ASCII.GetString(_buffer));
 
 				byte[] _receiveBuffer = new byte[1024];
 				int _rec = clientSocket.Receive(_receiveBuffer);
@@ -40,15 +42,19 @@ namespace TimeClient
 				Array.Copy(_receiveBuffer, _data, _rec);
 
 				_time = DateTime.Now - _start;
-				if(_time.TotalMilliseconds > 0)
+				if(_time.TotalMilliseconds > 2)
 				{
-					Console.WriteLine(" start:{0} end:{0}", _start, DateTime.Now);
+                    Console.WriteLine(" DelayTime:{0} ", (DateTime.Now - _start).TotalMilliseconds);
 				}
-				Console.WriteLine("[C <- S] ({0}/ms):{1}", _time.TotalMilliseconds, Encoding.ASCII.GetString(_data));
+                else
+                {
+                    Console.WriteLine(" >> fast");
+                }
+                if (DEBUG) Console.WriteLine("[C <- S] ({0}/ms):{1}", _time.TotalMilliseconds, Encoding.ASCII.GetString(_data));
 
 
 
-				System.Threading.Thread.Sleep(500);
+				System.Threading.Thread.Sleep(5);
 
 			}
 		}
@@ -61,7 +67,8 @@ namespace TimeClient
 				try
 				{
 					_attempts++;
-					clientSocket.Connect(IPAddress.Loopback, 100);
+                    //clientSocket.Connect(IPAddress.Loopback, 100);
+                    clientSocket.Connect(IPAddress.Parse("192.168.0.74"), 100);
 				}catch(SocketException _e)
 				{
 					Console.Clear();

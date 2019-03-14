@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeClient_11MultiSend", ".
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeClient_12HeadBody", "..\TimeClient_04HeadBody\TimeClient_04HeadBody\TimeClient_12HeadBody.csproj", "{1B2E8ED3-33DD-4727-A31C-F2C441A3EA99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeClient_13_Simple", "..\TimeClient13\TimeClient_13_Simple\TimeClient_13_Simple.csproj", "{8C6C2BF8-B2EB-45EE-9307-F579A597EF33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{1B2E8ED3-33DD-4727-A31C-F2C441A3EA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B2E8ED3-33DD-4727-A31C-F2C441A3EA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B2E8ED3-33DD-4727-A31C-F2C441A3EA99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C6C2BF8-B2EB-45EE-9307-F579A597EF33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C6C2BF8-B2EB-45EE-9307-F579A597EF33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C6C2BF8-B2EB-45EE-9307-F579A597EF33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C6C2BF8-B2EB-45EE-9307-F579A597EF33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
