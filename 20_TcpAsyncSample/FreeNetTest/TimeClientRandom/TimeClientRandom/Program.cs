@@ -33,7 +33,7 @@ namespace TimeClientRandom
 				{
 					_attempts++;
 					clientSocket.Connect(IPAddress.Loopback, 100);
-				}catch(SocketException _e)
+				} catch(SocketException _e)
 				{
 					Console.Clear();
 					Console.WriteLine("Connection attempts:" + _attempts);

@@ -96,7 +96,12 @@ namespace TimeServer6
 			acceptArgs = new SocketAsyncEventArgs();
 			acceptArgs.Completed += new EventHandler<SocketAsyncEventArgs>(OnAcceptCallback);
 			//acceptArgs.AcceptSocket = null;
+			//Console.WriteLine("1-1 acceptArgs.AcceptSocket:[" + acceptArgs.AcceptSocket + "]");
 			acceptSocket.AcceptAsync(acceptArgs);
+			//Console.WriteLine("1-2 acceptArgs.AcceptSocket:[" + acceptArgs.AcceptSocket + "]");
+
+
+
 		}
 
 		private void OnAcceptCallback(object _obj, SocketAsyncEventArgs _acceptArgs)
@@ -111,7 +116,7 @@ namespace TimeServer6
 			_acceptArgs.AcceptSocket = null;
 			acceptSocket.AcceptAsync(_acceptArgs);
 
-			//---------------------------------------
+			////---------------------------------------
 			// 유저를 풀에서 꺼내서 연결해주기...
 			// 받기 콜백 등록.
 			//---------------------------------------
@@ -164,12 +169,13 @@ namespace TimeServer6
 				{
 					_respone = " No ....";
 				}
+				Console.WriteLine(_text);
 
 				byte[] _sendBuffer = Encoding.ASCII.GetBytes(_respone);
 				Array.Copy(_sendBuffer, 0, _sendArgs.Buffer, _sendArgs.Offset, _sendBuffer.Length);
 				//_token.SendAsync(_sendArgs.Offset, _sendBuffer.Length);
 				_sendArgs.SetBuffer(_sendArgs.Offset, _sendBuffer.Length);
-				_socket.SendAsync(_sendArgs);
+				//_socket.SendAsync(_sendArgs);
 			}
 			else
 			{
