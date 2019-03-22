@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiThreadQueue2_Problem",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiThreadQueue3_Resolution", "..\MultiThreadQueue3\MultiThreadQueue3\MultiThreadQueue3_Resolution.csproj", "{45D5E2B8-ECED-410C-9B81-219186D13A4C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticTest", "..\StaticTest\StaticTest\StaticTest.csproj", "{DF2A83DD-E49B-4648-ADAE-1B3998E07679}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{45D5E2B8-ECED-410C-9B81-219186D13A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D5E2B8-ECED-410C-9B81-219186D13A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45D5E2B8-ECED-410C-9B81-219186D13A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF2A83DD-E49B-4648-ADAE-1B3998E07679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF2A83DD-E49B-4648-ADAE-1B3998E07679}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF2A83DD-E49B-4648-ADAE-1B3998E07679}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF2A83DD-E49B-4648-ADAE-1B3998E07679}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

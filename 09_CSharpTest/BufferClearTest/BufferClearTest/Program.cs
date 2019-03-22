@@ -14,6 +14,7 @@ namespace BufferClearTest
 
 		static void Main(string[] args)
 		{
+
 			Program p = new Program();
 			dt[0] = DateTime.Now;
 			p.Fun1(20);
