@@ -11,7 +11,7 @@ namespace TimeServer13_Simple
 	{
 		public static string title = "Time Server 13 (Simple)";
 		public const bool DEBUG			= false;
-		public const bool DEBUG_PACKET	= false;
+		public const bool DEBUG_PACKET	= true;
 		public const bool DEBUG_PACKET_LOOP_SHOW = true;
 		public const int DEBUG_PACKET_LOOP_COUNT = 100000;
 	}
@@ -134,7 +134,8 @@ namespace TimeServer13_Simple
 				int _transferred = _receiveArgs.BytesTransferred;
 				Array.Copy(_receiveArgs.Buffer, _receiveArgs.Offset, _token.receiveBuffer2, 0, _transferred);
 				string _text = Encoding.ASCII.GetString(_token.receiveBuffer2, 0, _transferred);
-				if (Protocol.DEBUG_PACKET) Console.WriteLine("[{0}] size:{1} >> {2}", _identityID + "/" + _debugWorkNum, _transferred, _text);
+				if (Protocol.DEBUG_PACKET)
+					Console.WriteLine("[{0}] size:{1} >> {2}", _identityID + "/" + _debugWorkNum, _transferred, _text);
 
 				//-------------------------------
 				// SendAsync....
@@ -170,6 +171,7 @@ namespace TimeServer13_Simple
 
 		void OnSendAsync(object _obj, SocketAsyncEventArgs _sendArgs)
 		{
+			//Socket _clientSocket = (Socket)_obj;
 			CUserToken _token = _sendArgs.UserToken as CUserToken;
 			int _debugWorkNum = _token.GetWorkNum();
 			int _identityID = _token.identityID;
