@@ -25,7 +25,7 @@ namespace WindowsFormsApp2
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			Start();
+			Start(textcontrol, textalpha, textInterval, textCount);
 		}
 
 		private void button2_Click(object sender, EventArgs e)
@@ -34,22 +34,24 @@ namespace WindowsFormsApp2
 		}
 
 		private bool bStart;
-		private void Start()
+		private void Start(TextBox _textcontrol, TextBox _textalpha, TextBox _textInterval, TextBox _textCount)
 		{
 			bStart = true;
-			int _sleep = 1;
+			int _sleep	= 1;
 			int _count	= 0;
 			int _MAX	= 0;
+			int _control = int.Parse(_textcontrol.Text);
+			int _alphabet = int.Parse(_textalpha.Text);
 			while (bStart)
 			{
-				_sleep	= (int)(float.Parse(textBox1.Text) * 1000);
-				_MAX	= int.Parse(textBox2.Text);
+				_sleep	= (int)(float.Parse(_textInterval.Text) * 1000);
+				_MAX	= int.Parse(_textCount.Text);
 				_count++;
 				display.Text = _count.ToString();
 
 
 				if (_sleep < 250) _sleep = 250;
-				CtrlZ();
+				KeyBoardEvent(_control, _alphabet);
 				if (_count >= _MAX)
 					break;
 
@@ -58,17 +60,17 @@ namespace WindowsFormsApp2
 			}
 		}
 
-		private void CtrlZ()
+		private void KeyBoardEvent(int _control, int _alphabet)
 		{
-			int keyCtrl = 17;
-			int keyZ = 90;
-			const int KEY_DOWN = 0x0000;
-			const int KEY_UP = 0x0002;
+			//int keyCtrl = 17;
+			//int keyZ = 90;
+			const int KEY_DOWN	= 0x0000;
+			const int KEY_UP	= 0x0002;
 			int kkk = 0;
-			keybd_event((byte)keyCtrl,	0, KEY_DOWN, ref kkk);
-			keybd_event((byte)keyZ,		0, KEY_DOWN, ref kkk);
-			keybd_event((byte)keyZ,		0, KEY_UP, ref kkk);
-			keybd_event((byte)keyCtrl,	0, KEY_UP, ref kkk);
+			keybd_event((byte)_control,	0, KEY_DOWN,	ref kkk);
+			keybd_event((byte)_alphabet,0, KEY_DOWN,	ref kkk);
+			keybd_event((byte)_alphabet,0, KEY_UP,		ref kkk);
+			keybd_event((byte)_control,	0, KEY_UP,		ref kkk);
 		}
 
 	}

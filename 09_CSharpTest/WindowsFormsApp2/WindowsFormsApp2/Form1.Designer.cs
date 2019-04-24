@@ -30,15 +30,18 @@
 		{
 			this.button1 = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.textInterval = new System.Windows.Forms.TextBox();
+			this.textCount = new System.Windows.Forms.TextBox();
 			this.button2 = new System.Windows.Forms.Button();
 			this.display = new System.Windows.Forms.Label();
+			this.textcontrol = new System.Windows.Forms.TextBox();
+			this.textalpha = new System.Windows.Forms.TextBox();
+			this.label2 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(445, 47);
+			this.button1.Location = new System.Drawing.Point(593, 49);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(78, 21);
 			this.button1.TabIndex = 0;
@@ -49,31 +52,31 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(234, 57);
+			this.label1.Location = new System.Drawing.Point(382, 59);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(73, 12);
 			this.label1.TabIndex = 1;
 			this.label1.Text = "초 간격으로 ";
 			// 
-			// textBox1
+			// textInterval
 			// 
-			this.textBox1.Location = new System.Drawing.Point(162, 54);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(66, 21);
-			this.textBox1.TabIndex = 2;
-			this.textBox1.Text = "0.25";
+			this.textInterval.Location = new System.Drawing.Point(310, 56);
+			this.textInterval.Name = "textInterval";
+			this.textInterval.Size = new System.Drawing.Size(66, 21);
+			this.textInterval.TabIndex = 2;
+			this.textInterval.Text = "0.3";
 			// 
-			// textBox2
+			// textCount
 			// 
-			this.textBox2.Location = new System.Drawing.Point(324, 48);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(66, 21);
-			this.textBox2.TabIndex = 3;
-			this.textBox2.Text = "60";
+			this.textCount.Location = new System.Drawing.Point(461, 56);
+			this.textCount.Name = "textCount";
+			this.textCount.Size = new System.Drawing.Size(66, 21);
+			this.textCount.TabIndex = 3;
+			this.textCount.Text = "20";
 			// 
 			// button2
 			// 
-			this.button2.Location = new System.Drawing.Point(543, 47);
+			this.button2.Location = new System.Drawing.Point(691, 49);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(78, 21);
 			this.button2.TabIndex = 4;
@@ -84,21 +87,49 @@
 			// display
 			// 
 			this.display.AutoSize = true;
-			this.display.Location = new System.Drawing.Point(322, 84);
+			this.display.Location = new System.Drawing.Point(470, 86);
 			this.display.Name = "display";
 			this.display.Size = new System.Drawing.Size(19, 12);
 			this.display.TabIndex = 5;
 			this.display.Text = "xx";
+			// 
+			// textcontrol
+			// 
+			this.textcontrol.Location = new System.Drawing.Point(46, 59);
+			this.textcontrol.Name = "textcontrol";
+			this.textcontrol.Size = new System.Drawing.Size(66, 21);
+			this.textcontrol.TabIndex = 6;
+			this.textcontrol.Text = "17";
+			// 
+			// textalpha
+			// 
+			this.textalpha.Location = new System.Drawing.Point(145, 59);
+			this.textalpha.Name = "textalpha";
+			this.textalpha.Size = new System.Drawing.Size(66, 21);
+			this.textalpha.TabIndex = 7;
+			this.textalpha.Text = "90";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(44, 18);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(176, 12);
+			this.label2.TabIndex = 8;
+			this.label2.Text = "ctrl(17) a(65) s(83) z(90) x(88)";
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.textalpha);
+			this.Controls.Add(this.textcontrol);
 			this.Controls.Add(this.display);
 			this.Controls.Add(this.button2);
-			this.Controls.Add(this.textBox2);
-			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.textCount);
+			this.Controls.Add(this.textInterval);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.button1);
 			this.Name = "Form1";
@@ -112,10 +143,13 @@
 
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.TextBox textInterval;
+		private System.Windows.Forms.TextBox textCount;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Label display;
+		private System.Windows.Forms.TextBox textcontrol;
+		private System.Windows.Forms.TextBox textalpha;
+		private System.Windows.Forms.Label label2;
 	}
 }
 
