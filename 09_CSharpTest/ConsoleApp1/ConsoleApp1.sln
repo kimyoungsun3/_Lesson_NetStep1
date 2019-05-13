@@ -53,6 +53,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "100_async_await3", "..\100_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpbitAPI", "..\UpbitAPI\UpbitAPI\UpbitAPI.csproj", "{E711555C-0320-4B95-AB2E-ED5540F4987D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp2", "..\WindowsFormsApp2\WindowsFormsApp2\WindowsFormsApp2.csproj", "{0CC91EB7-A626-48C9-AE17-F68A18768B00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "..\WindowsFormsApp1\WindowsFormsApp1\WindowsFormsApp1.csproj", "{A5CF9AA6-3F27-450E-84F3-51C96EFFD963}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +163,14 @@ Global
 		{E711555C-0320-4B95-AB2E-ED5540F4987D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E711555C-0320-4B95-AB2E-ED5540F4987D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E711555C-0320-4B95-AB2E-ED5540F4987D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CC91EB7-A626-48C9-AE17-F68A18768B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CC91EB7-A626-48C9-AE17-F68A18768B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CC91EB7-A626-48C9-AE17-F68A18768B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CC91EB7-A626-48C9-AE17-F68A18768B00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5CF9AA6-3F27-450E-84F3-51C96EFFD963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5CF9AA6-3F27-450E-84F3-51C96EFFD963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5CF9AA6-3F27-450E-84F3-51C96EFFD963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5CF9AA6-3F27-450E-84F3-51C96EFFD963}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
