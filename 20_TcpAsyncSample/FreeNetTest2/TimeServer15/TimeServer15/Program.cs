@@ -5,11 +5,11 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 
-namespace TimeServer14
+namespace TimeServer15
 {
 	class Protocol
 	{
-		public static string title = "Time Server 14(Sample)";
+		public static string title = "Time Server 15new(Sample)";
 		public const bool DEBUG = true;
 		public const bool DEBUG_PACKET = true;
 		public const bool DEBUG_PACKET_LOOP_SHOW = true;
@@ -42,7 +42,7 @@ namespace TimeServer14
 
 			CUserToken _token;
 			capability = _capability;
-			for(int i = 0; i < _capability; i++)
+			for (int i = 0; i < _capability; i++)
 			{
 				_token = new CUserToken(OnReceiveAsync, OnSendAsync);
 				list_UserFree.Enqueue(_token);
@@ -76,7 +76,7 @@ namespace TimeServer14
 			Socket _acceptSocket = acceptSocket;
 			_acceptArgs.AcceptSocket = null;
 			bool _bAcceptAsync = _acceptSocket.AcceptAsync(_acceptArgs);
-			if(_bAcceptAsync == false)
+			if (_bAcceptAsync == false)
 			{
 				Console.WriteLine(" [{0}]OnAcceptAsync #### >> acceptSocket.AcceptAsync Die or Other error", identity);
 				OnAcceptAsync(_acceptSocket, _acceptArgs);
@@ -188,7 +188,7 @@ namespace TimeServer14
 			}
 		}
 
-			void Disconnect(string _msg, CUserToken _token)
+		void Disconnect(string _msg, CUserToken _token)
 		{
 			list_UserConnect.Remove(_token);
 			lock (list_UserFree)
@@ -226,9 +226,9 @@ namespace TimeServer14
 
 		public void ClearData()
 		{
-			identityID	= 0;
-			workNum		= 0;
-			socket		= null;
+			identityID = 0;
+			workNum = 0;
+			socket = null;
 		}
 		public void SetSocket(Socket _s) { socket = _s; }
 		public int workNum;
@@ -265,7 +265,7 @@ namespace TimeServer14
 			lock (objectSendLock)
 			{
 				sendQueue.Dequeue();
-				if(sendQueue.Count > 0)
+				if (sendQueue.Count > 0)
 				{
 					SendMessage_Sending(_debugWorkNum);
 				}

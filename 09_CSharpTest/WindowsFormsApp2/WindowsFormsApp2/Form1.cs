@@ -20,7 +20,7 @@ namespace WindowsFormsApp2
 			InitializeComponent();
 		}
 
-		[DllImport("user32.dll")]
+		[DllImport("user32.dll")]//c++기본 파일이에요...
 		public static extern void keybd_event(byte bVk, byte bScan, int dwFlags, ref int dwExtraInfo );
 
 		private void button1_Click(object sender, EventArgs e)

@@ -5,16 +5,17 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 
-namespace TimeServer14
+namespace TimeServer17
 {
 	class Protocol
 	{
-		public static string title = "Time Server 14(Sample)";
-		public const bool DEBUG = true;
-		public const bool DEBUG_PACKET = true;
+		public static string title = "Time Server 17(Sample)";
+		public const bool DEBUG = false;
+		public const bool DEBUG_PACKET = false;
 		public const bool DEBUG_PACKET_LOOP_SHOW = true;
 		public const int DEBUG_PACKET_LOOP_COUNT = 100000;
 	}
+
 	class Program
 	{
 		public int identity = 0;
@@ -36,13 +37,14 @@ namespace TimeServer14
 			}
 		}
 
+
 		void StartupServer(int _capability)
 		{
 			Console.WriteLine(Protocol.title);
 
 			CUserToken _token;
 			capability = _capability;
-			for(int i = 0; i < _capability; i++)
+			for (int i = 0; i < _capability; i++)
 			{
 				_token = new CUserToken(OnReceiveAsync, OnSendAsync);
 				list_UserFree.Enqueue(_token);
@@ -76,7 +78,7 @@ namespace TimeServer14
 			Socket _acceptSocket = acceptSocket;
 			_acceptArgs.AcceptSocket = null;
 			bool _bAcceptAsync = _acceptSocket.AcceptAsync(_acceptArgs);
-			if(_bAcceptAsync == false)
+			if (_bAcceptAsync == false)
 			{
 				Console.WriteLine(" [{0}]OnAcceptAsync #### >> acceptSocket.AcceptAsync Die or Other error", identity);
 				OnAcceptAsync(_acceptSocket, _acceptArgs);
@@ -165,7 +167,7 @@ namespace TimeServer14
 				Disconnect("[정상종료1]", _token);
 			}
 		}
-
+		
 		void OnSendAsync(object _obj, SocketAsyncEventArgs _sendArgs)
 		{
 			CUserToken _token = _sendArgs.UserToken as CUserToken;
@@ -188,7 +190,7 @@ namespace TimeServer14
 			}
 		}
 
-			void Disconnect(string _msg, CUserToken _token)
+		void Disconnect(string _msg, CUserToken _token)
 		{
 			list_UserConnect.Remove(_token);
 			lock (list_UserFree)
@@ -226,9 +228,9 @@ namespace TimeServer14
 
 		public void ClearData()
 		{
-			identityID	= 0;
-			workNum		= 0;
-			socket		= null;
+			identityID = 0;
+			workNum = 0;
+			socket = null;
 		}
 		public void SetSocket(Socket _s) { socket = _s; }
 		public int workNum;
@@ -265,8 +267,9 @@ namespace TimeServer14
 			lock (objectSendLock)
 			{
 				sendQueue.Dequeue();
-				if(sendQueue.Count > 0)
+				if (sendQueue.Count > 0)
 				{
+					if (sendQueue.Count > 1) Console.WriteLine("대기명령:" + sendQueue.Count);
 					SendMessage_Sending(_debugWorkNum);
 				}
 			}
@@ -280,7 +283,7 @@ namespace TimeServer14
 			sendArgs.SetBuffer(sendArgs.Offset, _data.Length);
 
 			bool _bSendAsync = socket.SendAsync(sendArgs);
-			Console.WriteLine(socket.Connected + ":" + _bSendAsync);
+			//Console.WriteLine(socket.Connected + ":" + _bSendAsync);
 			if (_bSendAsync == false)
 			{
 				// socket killed

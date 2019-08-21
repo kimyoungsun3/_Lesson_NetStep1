@@ -46,13 +46,13 @@ namespace TimeClient_13_Simple
 					}
 					else
 					{
-						if(count % 1000 == 99)
-						Console.WriteLine(" >> fast : " + count);
+						if(count % 1000 == 0)
+							Console.WriteLine(" >> fast : " + count);
 					}
 					if (DEBUG) Console.WriteLine("[C <- S] ({0}/ms):{1}", _time.TotalMilliseconds, Encoding.ASCII.GetString(_receiveBuffer, 0, _rec));
 
 					count++;
-					System.Threading.Thread.Sleep(1);
+					//System.Threading.Thread.Sleep(1);
 				}
 			}
 			catch (Exception _e)
