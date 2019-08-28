@@ -29,7 +29,7 @@ namespace TimeServer17
 		{
 			Console.Title = Protocol.title;
 			Program _p = new Program();
-			_p.StartupServer(200);
+			_p.StartupServer(2000);
 
 			while (true)
 			{

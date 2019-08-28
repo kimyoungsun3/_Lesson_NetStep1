@@ -12,7 +12,7 @@ namespace MultiThreadQueue2
 		{
 			Console.Title = "MultiThreadQueue2 Test";
 			Program _p = new Program();
-			_p.Startup(9);
+			_p.Startup(20);
 		}
 
 		void Startup(int _count)
@@ -24,11 +24,11 @@ namespace MultiThreadQueue2
 				_t[i].Start(i + 1);
 			}
 
-			Thread[] _t2 = new Thread[1];
+			Thread[] _t2 = new Thread[_count];
 			for (int i = 0; i < 1; i++)
 			{
-				_t[i] = new Thread(new ParameterizedThreadStart(OutputThread));
-				_t[i].Start(i + 1);
+				_t2[i] = new Thread(new ParameterizedThreadStart(OutputThread));
+				_t2[i].Start(i + 1);
 			}
 		}
 
@@ -43,7 +43,7 @@ namespace MultiThreadQueue2
 				Thread.Sleep(1);
 				Enqueue(_id * 100000 + _x);
 				Thread.Sleep(1);
-				Console.WriteLine("IH [{0}/{1}] >> {2}", _id, Thread.CurrentThread.ManagedThreadId, queue.Count);
+				Console.WriteLine("InsertThread [{0}/{1}] >> {2}", _id, Thread.CurrentThread.ManagedThreadId, queue.Count);
 				Thread.Sleep(1000);
 			}
 		}
@@ -59,8 +59,7 @@ namespace MultiThreadQueue2
 				if(CheckQueue())
 					_x = Dequeue();
 				Thread.Sleep(1);
-				Console.WriteLine("OT [{0}/{1}] >> {2} >> {3}", 
-					_id, Thread.CurrentThread.ManagedThreadId, queue.Count,
+				Console.WriteLine("OutputThread [{0}/{1}] >> {2} >> {3}", _id, Thread.CurrentThread.ManagedThreadId, queue.Count,
 					_x);
 
 				if (CheckQueue())
@@ -99,7 +98,7 @@ namespace MultiThreadQueue2
 
 
 
-				int Dequeue()
+		int Dequeue()
 		{
 			return queue.Dequeue();
 		}

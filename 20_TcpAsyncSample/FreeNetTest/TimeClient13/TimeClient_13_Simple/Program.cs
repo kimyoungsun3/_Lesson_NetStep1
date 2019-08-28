@@ -69,8 +69,8 @@ namespace TimeClient_13_Simple
 				try
 				{
 					_attempts++;
-					clientSocket.Connect(IPAddress.Loopback, 100);
-					//clientSocket.Connect(IPAddress.Parse("192.168.0.74"), 100);
+					//clientSocket.Connect(IPAddress.Loopback, 100);
+					clientSocket.Connect(IPAddress.Parse("192.168.5.37"), 100);
 				}
 				catch (SocketException _e)
 				{

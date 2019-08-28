@@ -10,9 +10,9 @@ namespace MultiThreadQueue3
 	{
 		static void Main(string[] args)
 		{
-			Console.Title = "MultiThreadQueue2 Test";
+			Console.Title = "MultiThreadQueue2 Test111";
 			Program _p = new Program();
-			_p.Startup(9);
+			_p.Startup(91);
 		}
 
 		void Startup(int _count)
@@ -24,11 +24,11 @@ namespace MultiThreadQueue3
 				_t[i].Start(i + 1);
 			}
 
-			Thread[] _t2 = new Thread[1];
+			Thread[] _t2 = new Thread[_count];
 			for (int i = 0; i < 1; i++)
 			{
-				_t[i] = new Thread(new ParameterizedThreadStart(OutputThread));
-				_t[i].Start(i + 1);
+				_t2[i] = new Thread(new ParameterizedThreadStart(OutputThread));
+				_t2[i].Start(i + 1);
 			}
 		}
 

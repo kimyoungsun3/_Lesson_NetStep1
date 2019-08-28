@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs0", "ConsoleApp1\E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackTest", "StackTest\StackTest.csproj", "{AE8CAA3E-6DB3-4239-BBF4-24A4ADCA66FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackQueue", "..\StackQueue\StackQueue\StackQueue.csproj", "{689AECD7-97C9-4C0E-93D3-64867172717E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackQueuePerform", "..\StackQueue\StackQueue\StackQueuePerform.csproj", "{689AECD7-97C9-4C0E-93D3-64867172717E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BufferClearTest", "..\BufferClearTest\BufferClearTest\BufferClearTest.csproj", "{E22193D3-6815-4451-8FD7-B8ADA4DFF300}"
 EndProject
@@ -56,6 +56,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp2", "..\WindowsFormsApp2\WindowsFormsApp2\WindowsFormsApp2.csproj", "{0CC91EB7-A626-48C9-AE17-F68A18768B00}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "..\WindowsFormsApp1\WindowsFormsApp1\WindowsFormsApp1.csproj", "{A5CF9AA6-3F27-450E-84F3-51C96EFFD963}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "102_BitConverter", "102_BitConverter\102_BitConverter.csproj", "{443B6316-B99E-4EC7-B6DD-A2B5DF4D3D6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "103_ByteToDataSpeedTest", "ByteToDataSpeedTest\103_ByteToDataSpeedTest.csproj", "{F609D9F4-C3AF-47BD-AEEE-F72A794AB1A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "104_ArrayCopyTest", "104_ArrayCopyTest\104_ArrayCopyTest.csproj", "{74604C68-70F6-46FD-BFF3-DE151BC66AD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "105_FloatToByteTest", "105_FloatToByteTest\105_FloatToByteTest.csproj", "{42BA04C9-701A-4079-B932-1FA56E3D8764}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "106_ListAddRemoveTest", "106_ListAddRemoveTest\106_ListAddRemoveTest.csproj", "{575CC3E6-BA0C-40B8-8979-EA85385D6F51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,6 +181,26 @@ Global
 		{A5CF9AA6-3F27-450E-84F3-51C96EFFD963}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5CF9AA6-3F27-450E-84F3-51C96EFFD963}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5CF9AA6-3F27-450E-84F3-51C96EFFD963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443B6316-B99E-4EC7-B6DD-A2B5DF4D3D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443B6316-B99E-4EC7-B6DD-A2B5DF4D3D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443B6316-B99E-4EC7-B6DD-A2B5DF4D3D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443B6316-B99E-4EC7-B6DD-A2B5DF4D3D6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F609D9F4-C3AF-47BD-AEEE-F72A794AB1A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F609D9F4-C3AF-47BD-AEEE-F72A794AB1A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F609D9F4-C3AF-47BD-AEEE-F72A794AB1A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F609D9F4-C3AF-47BD-AEEE-F72A794AB1A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74604C68-70F6-46FD-BFF3-DE151BC66AD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74604C68-70F6-46FD-BFF3-DE151BC66AD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74604C68-70F6-46FD-BFF3-DE151BC66AD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74604C68-70F6-46FD-BFF3-DE151BC66AD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42BA04C9-701A-4079-B932-1FA56E3D8764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42BA04C9-701A-4079-B932-1FA56E3D8764}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42BA04C9-701A-4079-B932-1FA56E3D8764}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42BA04C9-701A-4079-B932-1FA56E3D8764}.Release|Any CPU.Build.0 = Release|Any CPU
+		{575CC3E6-BA0C-40B8-8979-EA85385D6F51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{575CC3E6-BA0C-40B8-8979-EA85385D6F51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{575CC3E6-BA0C-40B8-8979-EA85385D6F51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{575CC3E6-BA0C-40B8-8979-EA85385D6F51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
