@@ -2,22 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Threading;
 
-namespace MultiThreadQueue3
+namespace ThreadPoolDD
 {
-	class Program
+	class SubClass
 	{
-		static void Main(string[] args)
-		{
-			Console.Title = "MultiThreadQueue3_1_Resolution(Queue)";
-			Console.WriteLine(Console.Title);
-			Program _p = new Program();
-			_p.Startup(100);
-
-		}
-
-		void Startup(int _count)
+		public void Startup(int _count = 100)
 		{
 			Thread[] _t = new Thread[_count];
 			for (int i = 0; i < _count; i++)
@@ -31,6 +23,16 @@ namespace MultiThreadQueue3
 			{
 				_t2[i] = new Thread(new ParameterizedThreadStart(OutputThread));
 				_t2[i].Start(i + 1);
+			}
+		}
+
+		public void StartupPool(int _count)
+		{
+			ThreadPool.SetMinThreads(_count * 2, _count * 2);
+			for (int i = 0; i < _count; i++)
+			{
+				ThreadPool.QueueUserWorkItem(InsertThread, i + 1);
+				ThreadPool.QueueUserWorkItem(OutputThread, i + 1);
 			}
 		}
 

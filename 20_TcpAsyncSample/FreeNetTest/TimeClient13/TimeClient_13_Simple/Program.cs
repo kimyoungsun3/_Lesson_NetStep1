@@ -52,7 +52,7 @@ namespace TimeClient_13_Simple
 					if (DEBUG) Console.WriteLine("[C <- S] ({0}/ms):{1}", _time.TotalMilliseconds, Encoding.ASCII.GetString(_receiveBuffer, 0, _rec));
 
 					count++;
-					//System.Threading.Thread.Sleep(1);
+					System.Threading.Thread.Sleep(1000*60);
 				}
 			}
 			catch (Exception _e)
@@ -69,8 +69,8 @@ namespace TimeClient_13_Simple
 				try
 				{
 					_attempts++;
-					//clientSocket.Connect(IPAddress.Loopback, 100);
-					clientSocket.Connect(IPAddress.Parse("192.168.5.37"), 100);
+					clientSocket.Connect(IPAddress.Loopback, 100);
+					//clientSocket.Connect(IPAddress.Parse("192.168.5.37"), 100);
 				}
 				catch (SocketException _e)
 				{

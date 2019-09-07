@@ -12,7 +12,8 @@ namespace MultiThreadQueue2
 		{
 			Console.Title = "MultiThreadQueue2 Test";
 			Program _p = new Program();
-			_p.Startup(20);
+			_p.Startup(100);
+
 		}
 
 		void Startup(int _count)
@@ -25,7 +26,7 @@ namespace MultiThreadQueue2
 			}
 
 			Thread[] _t2 = new Thread[_count];
-			for (int i = 0; i < 1; i++)
+			for (int i = 0; i < _count; i++)
 			{
 				_t2[i] = new Thread(new ParameterizedThreadStart(OutputThread));
 				_t2[i].Start(i + 1);
@@ -37,14 +38,18 @@ namespace MultiThreadQueue2
 		{
 			int _id = (int)_number;
 			int _x = 0;
+			int _loop = 0;
 			while (true)
 			{
+				_loop++;
+				if (_loop % 1000 == 0) Console.WriteLine("I[{0}] >> {1}", _id, _loop);
+
 				_x++;
-				Thread.Sleep(1);
+				//Thread.Sleep(1);
 				Enqueue(_id * 100000 + _x);
+				//Thread.Sleep(1);
+				//Console.WriteLine("InsertThread [{0}/{1}] >> {2}", _id, Thread.CurrentThread.ManagedThreadId, queue.Count);
 				Thread.Sleep(1);
-				Console.WriteLine("InsertThread [{0}/{1}] >> {2}", _id, Thread.CurrentThread.ManagedThreadId, queue.Count);
-				Thread.Sleep(1000);
 			}
 		}
 
@@ -52,55 +57,57 @@ namespace MultiThreadQueue2
 		{
 			int _id = (int)_number;
 			int _x = 0;
+			int _loop = 0;
 			while (true)
 			{
-				Thread.Sleep(1);
+				_loop++;
+				if (_loop % 1000 == 0) Console.WriteLine("O[{0}] >> {1}", _id, _loop);
+
 				_x = -1;
+				//Thread.Sleep(1);
 				if(CheckQueue())
 					_x = Dequeue();
+				//Thread.Sleep(1);
+				//Console.WriteLine("OutputThread [{0}/{1}] >> {2} >> {3}", _id, Thread.CurrentThread.ManagedThreadId, queue.Count, _x);
 				Thread.Sleep(1);
-				Console.WriteLine("OutputThread [{0}/{1}] >> {2} >> {3}", _id, Thread.CurrentThread.ManagedThreadId, queue.Count,
-					_x);
-
-				if (CheckQueue())
-					Thread.Sleep(1);
-				else
-					Thread.Sleep(1000);
 			}
 		}
 
 		bool CheckQueue()
 		{
-			return queue.Count > 0;
+			//lock (queue)
+			{
+				return queue.Count > 0;
+			}
 		}
 
 		void Enqueue(int _value)
 		{
-			queue.Enqueue(_value);
+			//lock (queue)
+			{
+				//System.ArgumentException: '소스 배열의 길이가 짧습니다. srcIndex, length 및 배열의 하한을 확인하십시오.'
+				//System.ArgumentException: '대상 배열의 길이가 짧습니다. destIndex, length 및 배열의 하한을 확인하십시오.'
+				//System.ArgumentException: '소스 배열의 길이가 짧습니다. srcIndex, length 및 배열의 하한을 확인하십시오.'
+				//System.ArgumentException: '대상 배열의 길이가 짧습니다. destIndex, length 및 배열의 하한을 확인하십시오.'
+				//System.ArgumentException: '대상 배열의 길이가 짧습니다. destIndex, length 및 배열의 하한을 확인하십시오.'
+				//System.ArgumentException: '대상 배열의 길이가 짧습니다. destIndex, length 및 배열의 하한을 확인하십시오.'
+				//System.ArgumentException: '소스 배열의 길이가 짧습니다. srcIndex, length 및 배열의 하한을 확인하십시오.'
+				//System.ArgumentException: '소스 배열의 길이가 짧습니다. srcIndex, length 및 배열의 하한을 확인하십시오.'
+				queue.Enqueue(_value);
+			}
 		}
-
-		//처리되지 않은 예외:처리되지 않은 예외:  처리되지 않은 예외: System.ArgumentException: 소스 배열의 길이가 짧습니다.srcIndex, length 및 배열의 하한을 확인하십시오.
-		//   위치: System.Array.Copy(Array sourceArray, Int32 sourceIndex, Array destinationArray, Int32 destinationIndex, Int32 length, Boolean reliable)
-		//   위치: System.Collections.Generic.Queue`1.SetCapacity(Int32 capacity)
-		//   위치: System.Collections.Generic.Queue`1.Enqueue(T item)
-		//   위치: MultiThreadQueue2.Program.Enqueue(Int32 _value) 파일 D:\devtool\study\study\_Lesson_NetStep1\09_CSharpTest\MultiThreadQueue2\MultiThreadQueue2\Program.cs:줄 80
-		//   위치: MultiThreadQueue2.Program.InsertThread(Object _number) 파일 D:\devtool\study\study\_Lesson_NetStep1\09_CSharpTest\MultiThreadQueue2\MultiThreadQueue2\Program.cs:줄 44
-		//   위치: System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
-		//   위치: System.Threading.ThreadHelper.ThreadStart(Object obj) System.ArgumentException: 소스 배열의 길이가 짧습니다. srcIndex, length 및 배열의 하한을 확인하십시오.
-
-		//   위치: System.Array.Copy(Array sourceArray, Int32 sourceIndex, Array destinationArray, Int32 destinationIndex, Int32 length, Boolean reliable)
-		//   위치: System.Collections.Generic.Queue`1.SetCapacity(Int32 capacity)
-		//   위치: System.Collections.Generic.Queue`1.Enqueue(T item)
-		//   위치: MultiThreadQueue2.Program.Enqueue(Int32 _value) 파일 D:\devtool\study\study\_Lesson_NetStep1\09_CSharpTest\MultiThreadQueue2\MultiThreadQueue2\Program.cs:줄 80
-		//   위치: MultiThreadQueue2.Program.InsertThread(Object _number) 파일 D:\devtool\study\study\_Lesson_NetStep1\09_CSharpTest\MultiThreadQueue2\MultiThreadQueue2\Program.cs:줄 44
-		//   위치: System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
-		//   위치: System.Threading.ThreadHelper.ThreadStart(Object obj) 계속하려면 아무 키나 누르십시오. . .
-
-
 
 		int Dequeue()
 		{
-			return queue.Dequeue();
+			//lock (queue)
+			{
+				//System.InvalidOperationException: '큐가 비어 있습니다.'
+				//System.InvalidOperationException: '큐가 비어 있습니다.'
+				if (queue.Count > 0)
+					return queue.Dequeue();
+				else
+					return -1;
+			}
 		}
 	}
 }

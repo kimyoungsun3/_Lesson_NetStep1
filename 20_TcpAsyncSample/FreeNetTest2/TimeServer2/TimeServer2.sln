@@ -35,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeServer16", "..\TimeServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeServer17", "..\TimeServer17\TimeServer17\TimeServer17.csproj", "{54F42B10-E949-434B-9B81-369D143E7C69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeServer18", "TimeServer18\TimeServer18.csproj", "{42CCABD1-3CD0-4FFA-A504-0771E95EBDA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeServer19", "TimeServer19\TimeServer19.csproj", "{4DDAD75F-9DF9-46CE-B227-DE75A015B94A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +109,14 @@ Global
 		{54F42B10-E949-434B-9B81-369D143E7C69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54F42B10-E949-434B-9B81-369D143E7C69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54F42B10-E949-434B-9B81-369D143E7C69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42CCABD1-3CD0-4FFA-A504-0771E95EBDA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42CCABD1-3CD0-4FFA-A504-0771E95EBDA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42CCABD1-3CD0-4FFA-A504-0771E95EBDA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42CCABD1-3CD0-4FFA-A504-0771E95EBDA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DDAD75F-9DF9-46CE-B227-DE75A015B94A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DDAD75F-9DF9-46CE-B227-DE75A015B94A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DDAD75F-9DF9-46CE-B227-DE75A015B94A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DDAD75F-9DF9-46CE-B227-DE75A015B94A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

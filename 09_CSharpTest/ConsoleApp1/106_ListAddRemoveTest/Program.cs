@@ -13,6 +13,7 @@ namespace _106_ListAddRemoveTest
 			num = _num;
 		}
 	}
+
 	class Program
 	{
 		static void Main(string[] args)

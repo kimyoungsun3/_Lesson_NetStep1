@@ -12,7 +12,7 @@ namespace MultiThreadQueue
 		{
 			Console.Title = "MultiThreadQueue Test";
 			Program _p = new Program();
-			_p.Startup(2);
+			_p.Startup(24);
 		}
 
 		void Startup(int _count)

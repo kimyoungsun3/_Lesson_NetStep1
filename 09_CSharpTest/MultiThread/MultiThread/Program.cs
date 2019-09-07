@@ -30,7 +30,7 @@ namespace MultiThread
 		void SubThread(object _number)
 		{
 			int _id = (int)_number;
-			int _count = 0;
+			//int _count = 0;
 			while (true)
 			{
 				//Thread.Sleep(1);

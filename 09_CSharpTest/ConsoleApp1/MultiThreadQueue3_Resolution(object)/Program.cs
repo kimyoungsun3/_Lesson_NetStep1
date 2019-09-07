@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace MultiThreadQueue3
+namespace MultiThreadQueue3_Resolution_object_
 {
 	class Program
 	{
 		static void Main(string[] args)
 		{
-			Console.Title = "MultiThreadQueue3_1_Resolution(Queue)";
+			Console.Title = "MultiThreadQueue3_2_Resolution(objectsame)";
 			Console.WriteLine(Console.Title);
 			Program _p = new Program();
 			_p.Startup(100);
@@ -43,7 +43,7 @@ namespace MultiThreadQueue3
 			while (true)
 			{
 				_loop++;
-				if (_id == 1 && _loop % 1000 == 0) Console.WriteLine("I[{0}] >> {1}", _id, _loop);
+				if (_loop % 1000 == 0) Console.WriteLine("I[{0}] >> {1}", _id, _loop);
 
 				_x++;
 				//Thread.Sleep(1);
@@ -62,7 +62,7 @@ namespace MultiThreadQueue3
 			while (true)
 			{
 				_loop++;
-				if (_id == 1 && _loop % 1000 == 0) Console.WriteLine("O[{0}] >> {1}", _id, _loop);
+				if (_loop % 1000 == 0) Console.WriteLine("O[{0}] >> {1}", _id, _loop);
 
 				_x = -1;
 				//Thread.Sleep(1);
@@ -82,11 +82,11 @@ namespace MultiThreadQueue3
 			}
 		}
 
-		//1. 해당 오브젝트로 묶어주기..
-		//   queue
+		//2 object로 테스트
+		object obj1 = new object();
 		void Enqueue(int _value)
 		{
-			lock (queue)
+			lock (obj1)
 			{
 				//System.ArgumentException: '소스 배열의 길이가 짧습니다. srcIndex, length 및 배열의 하한을 확인하십시오.'
 				//System.ArgumentException: '대상 배열의 길이가 짧습니다. destIndex, length 및 배열의 하한을 확인하십시오.'
@@ -102,7 +102,7 @@ namespace MultiThreadQueue3
 
 		int Dequeue()
 		{
-			lock (queue)
+			lock (obj1)
 			{
 				//System.InvalidOperationException: '큐가 비어 있습니다.'
 				//System.InvalidOperationException: '큐가 비어 있습니다.'
