@@ -116,6 +116,8 @@ namespace CircleQueue
 			_p.Test8();
 
 			_p.TestReadAndParse();
+
+			Console.ReadLine();
 		}
 
 		RingBuffer ringBuffer = new RingBuffer(10);

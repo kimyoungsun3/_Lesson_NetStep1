@@ -13,33 +13,39 @@ namespace _100_AsyncRun
 		{
 			CountDownWrapper _a = new CountDownWrapper();
 			CountDownWrapper _b = new CountDownWrapper();
-			_a.CountDown(10);
-			_b.CountDown(10);
+			_a.CountDown(1, 4);
+			_b.CountDown(2, 4);
 			Console.WriteLine("---- Main 1 ----");
 			AutoResetEvent.WaitAll(new[] { _a.done, _b.done });
 			Console.WriteLine("---- Main 2 ----");
+			Console.ReadLine();
 		}
 	}
 
 	class CountDownWrapper
 	{
 		public AutoResetEvent done = new AutoResetEvent(false);
-		public void CountDown(int _cc)
+		int id;
+		public void CountDown(int _id, int _cc)
 		{
-			Console.WriteLine(_cc--);
+			id = _id;
+			_cc--;
+			string _str = "["+ id+"/"+ _cc + "/" + Thread.CurrentThread.ManagedThreadId + "]";
+			Console.WriteLine(_str + " >> " + _cc);
 			if(_cc >= 0)
 			{
-				Task.Delay(1000).ContinueWith((c) =>
+				Task.Delay(3000).ContinueWith((c) =>
 				{
-					CountDown(_cc);
+					CountDown(id, _cc);
 				});
-				Console.WriteLine(" ---->");
+				Console.WriteLine(_str + " >> ---->");
 			}
 			else
 			{
 				done.Set();
+				Console.WriteLine(_str + " >> autoResetEvent.()");
 			}
-			Console.WriteLine("----{0}----", _cc);
+			Console.WriteLine(_str + "----end----");
 		}
 	}
 }

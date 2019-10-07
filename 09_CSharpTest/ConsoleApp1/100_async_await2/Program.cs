@@ -12,11 +12,12 @@ namespace _100_async_await2
 		static void Main(string[] args)
 		{
 			Program _p = new Program();
+			_p.Run1();
+			Thread.Sleep(5000);
+
 			_p.Run2();
-			while (true)
-			{
-				Thread.Sleep(1000);
-			}
+
+			Console.ReadLine();
 		}
 
 		private async void Run1()
@@ -25,7 +26,7 @@ namespace _100_async_await2
 			await LongCalc2(1, 4);
 			await LongCalc2(2, 4);
 			await LongCalc2(3, 4);
-			Console.WriteLine("----------");
+			Console.WriteLine("------Run1 end----");
 		}
 
 		private async void Run2()
@@ -34,7 +35,7 @@ namespace _100_async_await2
 			Task<int>.Run(() => LongCalc2(1, 4));
 			Task<int>.Run(() => LongCalc2(2, 4));
 			Task<int>.Run(() => LongCalc2(3, 4));
-			Console.WriteLine("----------");
+			Console.WriteLine("----Run2 end------");
 		}
 
 		private async Task<int> LongCalc2(int _id, int _times)

@@ -9,8 +9,8 @@ namespace _100_async_await3
 {
 	public class Program
 	{
-		public delegate void Func();
-		public Func pF;
+		public delegate void VOID_FUN_VOID();
+		public VOID_FUN_VOID onFun;
 
 		static void Main(string[] args)
 		{
@@ -20,8 +20,8 @@ namespace _100_async_await3
 			Task<int> t1 = p.test2("P1");
 			Task<int> t2 = p.test2("P2");
 			Task<int> t3 = p.test2("P3");
-			Thread.Sleep(3000);
 
+			Console.ReadLine();
 		}
 
 
@@ -41,9 +41,9 @@ namespace _100_async_await3
 			{
 				await Task.Delay(1); //
 				log("[call]" + n + " <" + i);
-				if (pF != null)
+				if (onFun != null)
 				{
-					pF();
+					onFun();
 				}
 			}
 			return 0;

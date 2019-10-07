@@ -10,11 +10,13 @@ namespace _106_ListAddObject
 		static void Main(string[] args)
 		{
 			Program _p = new Program();
-			_p.Test();
+			_p.DoTest();
+
+			Console.ReadLine();
 		}
 
 		List<object> list = new List<object>();
-		void Test()
+		void DoTest()
 		{
 			list.Add(new A1(1));
 			list.Add(new A2(2));

@@ -11,10 +11,12 @@ namespace _104_ArrayCopyTest
 		static void Main(string[] args)
 		{
 			Program _p = new Program();
-			_p.ArrayCopyTest();
 
 			for(int i = 0; i < 5; i++)
+			{
+				_p.ArrayCopyTest();
 				_p.ArrayCreateAndCopyTest();
+			}
 
 
 			Console.ReadKey();
@@ -24,6 +26,7 @@ namespace _104_ArrayCopyTest
 		DateTime[] dt = new DateTime[10];
 		void ArrayCopyTest()
 		{
+			Console.WriteLine("=====[1. 복사 횟수 1회, 2회]=======");
 			byte[] _b1 = new byte[1024];
 			byte[] _b2 = new byte[1024];
 			byte[] _b3 = new byte[1024];
@@ -76,6 +79,7 @@ namespace _104_ArrayCopyTest
 
 		void ArrayCreateAndCopyTest()
 		{
+			Console.WriteLine("=====[2. 생성 >> 복사 횟수 1회, 2회]=======");
 			byte[] _b1 = new byte[1024];
 			byte[] _b2 = new byte[0];
 			byte[] _b3 = new byte[0];
@@ -121,7 +125,6 @@ namespace _104_ArrayCopyTest
 
 			dt[4] = DateTime.Now;
 
-			Console.WriteLine("============");
 			if (_b1 != null) Display(_b1, 20, 20);
 			if (_b2 != null) Display(_b2, 20, 20);
 

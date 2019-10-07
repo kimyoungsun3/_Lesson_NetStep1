@@ -10,15 +10,16 @@ namespace _109_Static
 		static void Main(string[] args)
 		{
 			Program _p = new Program();
-			_p.Test();
-			_p.Test2();
+			_p.DoTest();
+			_p.DoTest2();
 			Console.ReadKey();
 		}
 
 		List<SubClass> list = new List<SubClass>();
-		void Test()
+		void DoTest()
 		{
-			for(int i = 0; i < 10; i++)
+			Console.WriteLine("=======[1. 리스트추가, 순회출력]========");
+			for (int i = 0; i < 10; i++)
 			{
 				list.Add(new SubClass());
 			}
@@ -29,8 +30,9 @@ namespace _109_Static
 			});
 		}
 
-		void Test2()
+		void DoTest2()
 		{
+			Console.WriteLine("=======[2. 생성만 한후에 출력...]========");
 			SubClass2 _sub2 = null;
 			for (int i = 0; i< 10; i++)
 			{

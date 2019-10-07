@@ -12,11 +12,12 @@ namespace MultiThreadQueue
 		{
 			Console.Title = "MultiThreadQueue Test";
 			Program _p = new Program();
-			_p.Startup(24);
+			_p.DoTest(24);
 		}
 
-		void Startup(int _count)
+		void DoTest(int _count)
 		{
+			//queue.Dequeue();
 			Thread[] _t = new Thread[_count];
 			for (int i = 0; i < _count; i++)
 			{

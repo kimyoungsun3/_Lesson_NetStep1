@@ -19,6 +19,7 @@ namespace _108_InnerClass
 		Dictionary<int, MasterA> dic_QuestList = new Dictionary<int, MasterA>();
 		void Test2()
 		{
+			Console.WriteLine("=======[2. Dictionary]========");
 			MasterA _master = null;
 			for (int i = 0; i < 3; i++)
 			{
@@ -49,6 +50,7 @@ namespace _108_InnerClass
 		List<MasterA.SubA1> list = new List<MasterA.SubA1>();
 		void Test()
 		{
+			Console.WriteLine("=======[1. List]========");
 			for (int i = 0; i < 5; i++)
 				list.Add(new MasterA.SubA1(i));
 

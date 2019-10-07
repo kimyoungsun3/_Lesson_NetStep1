@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C555BE9B-6938-4252-8D98-EEC7FBD6213C}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>_100_async_await3</RootNamespace>
     <AssemblyName>100_async_await3</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
