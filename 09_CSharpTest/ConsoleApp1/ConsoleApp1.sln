@@ -119,6 +119,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "115_02_System.Threading.Tim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "115_02_System.Times.Timer", "115_02_System.Times.Timer\115_02_System.Times.Timer.csproj", "{C9259925-715A-451C-B321-4E3056EFF43B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "104_ArrayCopyTest2", "104_ArrayCopyTest2\104_ArrayCopyTest2.csproj", "{310A1CB2-27B2-4D72-9F0F-1C63577F6475}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -357,6 +359,10 @@ Global
 		{C9259925-715A-451C-B321-4E3056EFF43B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9259925-715A-451C-B321-4E3056EFF43B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9259925-715A-451C-B321-4E3056EFF43B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{310A1CB2-27B2-4D72-9F0F-1C63577F6475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{310A1CB2-27B2-4D72-9F0F-1C63577F6475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{310A1CB2-27B2-4D72-9F0F-1C63577F6475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{310A1CB2-27B2-4D72-9F0F-1C63577F6475}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

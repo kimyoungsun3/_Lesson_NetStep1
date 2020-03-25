@@ -25,6 +25,11 @@ namespace _117_Patten
 
 			_p.DoTest3();
 			_p.DoTest4();
+			_p.DoTest5(10000 * 10000 * 20);
+			_p.DoTest5(10000 * 10000 * 20);
+			_p.DoTest5(10000 * 10000 * 20);
+			_p.DoTest5(10000 * 10000 * 20);
+			_p.DoTest5(10000 * 10000 * 20);
 
 			Console.ReadLine();
 		}
@@ -119,6 +124,22 @@ namespace _117_Patten
 			Console.WriteLine(".Contains => " + (t[2] - t[1]).TotalMilliseconds);
 			Console.WriteLine(".IndexOf => " + (t[3] - t[2]).TotalMilliseconds);
 			Console.WriteLine(".Contains => " + (t[4] - t[3]).TotalMilliseconds);
+		}
+
+		void DoTest5(int _imax)
+		{
+			Console.WriteLine("========[ loop time test ]===========");
+
+			t[0] = DateTime.Now;
+			int _sum = 0;
+			for(int i = 0; i < _imax; i++)
+			{
+				_sum = i;
+			}
+
+			t[1] = DateTime.Now;
+
+			Console.WriteLine("int.Max Count => " + (t[1] - t[0]).TotalMilliseconds);
 		}
 
 		int LOOP_MAX = 1000_000;

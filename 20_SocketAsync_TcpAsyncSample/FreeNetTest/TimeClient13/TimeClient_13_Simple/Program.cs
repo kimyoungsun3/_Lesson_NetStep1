@@ -20,7 +20,7 @@ namespace TimeClient_13_Simple
 		static void Main(string[] args)
 		{
 			Console.Title = "Time Echo Client 13";
-			int threadCount = 2;
+			int threadCount = 100;
 			Parallel.For(0, threadCount, s =>
 			{
 				Program _p = new Program();
@@ -50,7 +50,7 @@ namespace TimeClient_13_Simple
 					int _rec = clientSocket.Receive(_receiveBuffer);
 
 					_time = DateTime.Now - _start;
-					if (_time.TotalMilliseconds > 5)
+					if (_time.TotalMilliseconds > 500)
 					{
 						Console.WriteLine("[" + Thread.CurrentThread.ManagedThreadId + "] DelayTime:{0} ", (DateTime.Now - _start).TotalMilliseconds);
 					}
@@ -77,9 +77,9 @@ namespace TimeClient_13_Simple
 					//	}
 					//}
 
-					System.Threading.Thread.Sleep(1);		//1000전송/1초당
+					//System.Threading.Thread.Sleep(1);		//1000전송/1초당
 					//System.Threading.Thread.Sleep(5);		//200전송/1초당
-					//System.Threading.Thread.Sleep(20);	//50전송/1초당
+					System.Threading.Thread.Sleep(20);	//50전송/1초당
 					//System.Threading.Thread.Sleep(50);	//20전송/1초당
 					//System.Threading.Thread.Sleep(1000*60);
 				}

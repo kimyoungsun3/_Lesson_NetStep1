@@ -10,11 +10,11 @@ namespace TimeServer20
 {
 	public class Protocol
 	{
-		public static string title				= "Time Server 20(Sample)";
-		public const bool DEBUG					= false;
-		public const bool DEBUG_PACKET			= false;
-		public const bool DEBUG_PACKET_LOOP_SHOW = false;
-		public const int DEBUG_PACKET_LOOP_COUNT = 100_000;
+		public static string title = "Time Server 20(Sample)";
+		public const bool DEBUG						= false;
+		public const bool DEBUG_PACKET				= false;
+		public const bool DEBUG_PACKET_LOOP_SHOW	= false;
+		public const int DEBUG_PACKET_LOOP_COUNT	= 100_000;
 	}
 
 	class Program
@@ -28,8 +28,8 @@ namespace TimeServer20
 
 		static void Main(string[] args)
 		{
-			Console.Title = Protocol.title;
-			Program _p = new Program();
+			Console.Title	= Protocol.title;
+			Program _p		= new Program();
 			_p.StartupServer(2000);
 			while (true)
 			{
@@ -48,7 +48,6 @@ namespace TimeServer20
 				{
 					_p.DisplayInfo();
 				}
-				//System.Threading.Thread.Sleep(1000);
 			}
 		}
 
@@ -69,27 +68,28 @@ namespace TimeServer20
 				list_Pool.Enqueue(_token);
 			}
 
-			//accept socket
+			//accept Socket
 			acceptArgs				= new SocketAsyncEventArgs();
 			acceptArgs.Completed	+= new EventHandler<SocketAsyncEventArgs>(OnAcceptAsync);
-			acceptArgs.AcceptSocket = null;
+			acceptArgs.AcceptSocket	= null;
 
 			acceptSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			acceptSocket.Bind(new IPEndPoint(IPAddress.Any, 100));
 			acceptSocket.Listen(100);
 
-			bool _bAcceptAsync = acceptSocket.AcceptAsync(acceptArgs);
-			if (_bAcceptAsync == false)
+			bool _isAcceptAsync = acceptSocket.AcceptAsync(acceptArgs);
+			if(_isAcceptAsync == false)
 			{
 				Debug.Log(" StartupServer #### >> acceptSocket.AcceptAsync Die or Other error");
 				OnAcceptAsync(acceptSocket, acceptArgs);
 			}
-
 		}
-		void OnAcceptAsync(object _obj, SocketAsyncEventArgs _acceptArgs)
+
+		void OnAcceptAsync(Object _obj, SocketAsyncEventArgs _acceptArgs)
 		{
 			Interlocked.Increment(ref identity);
 			int _identity = identity;
+
 			if (Protocol.DEBUG)
 				Debug.Log($"[{identity}]OnAcceptAsync (callback) New Client Connect"
 				   + $"\n   >> acceptSocket:{((Socket)_obj).Connected}"
@@ -98,16 +98,17 @@ namespace TimeServer20
 				   + $" LastOperation:{_acceptArgs.LastOperation}"
 				   + $" SocketError:{_acceptArgs.SocketError}");
 
+
 			//---------------------------------------
 			// acceptSocket -> new Client Socket -> New Client
 			// acceptSocket -> Accept Register.
 			//---------------------------------------
-			Socket _acceptSocket	= acceptSocket;
-			Socket _clientSocket	= _acceptArgs.AcceptSocket;
-			_acceptArgs.AcceptSocket = null;
+			Socket _acceptSocket		= acceptSocket;
+			Socket _clientSocket		= _acceptArgs.AcceptSocket;
+			_acceptArgs.AcceptSocket	= null;
 
-			bool _bAcceptAsync = _acceptSocket.AcceptAsync(_acceptArgs);
-			if (_bAcceptAsync == false)
+			bool _isAcceptAsync = _acceptSocket.AcceptAsync(_acceptArgs);
+			if (_isAcceptAsync == false)
 			{
 				Debug.Log($" [{identity}]OnAcceptAsync #### >> acceptSocket.AcceptAsync Die or Other error");
 				OnAcceptAsync(_acceptSocket, _acceptArgs);
@@ -123,8 +124,8 @@ namespace TimeServer20
 			_token.identityID	= _identity;
 			list_Users.Add(_token);
 
-			bool _bReceiveAsync = _clientSocket.ReceiveAsync(_token.receiveArgs);
-			if(_bReceiveAsync == false)
+			bool _isReceiveAsync = _clientSocket.ReceiveAsync(_token.receiveArgs);
+			if (_isReceiveAsync == false)
 			{
 				//등록하자마자 바로 데이타 받음...
 				//
@@ -139,12 +140,12 @@ namespace TimeServer20
 			}
 		}
 
-		void OnConnectAsync(object _obj, SocketAsyncEventArgs _connectArgs)
+		void OnConnectAsync(Object _obj, SocketAsyncEventArgs _connectArgs)
 		{
 
 		}
 
-		void OnReceiveAsync(object _obj, SocketAsyncEventArgs _receiveArgs)
+		void OnReceiveAsync(Object _obj, SocketAsyncEventArgs _receiveArgs)
 		{
 			CUserToken _token	= _receiveArgs.UserToken as CUserToken;
 			int _identityID		= _token.identityID;
@@ -173,26 +174,24 @@ namespace TimeServer20
 				if (Protocol.DEBUG_PACKET)
 					Debug.Log($"[{_identityID}/{_debugWorkNum}] _transferred:{_byteTransferred} >> {_text}");
 
-
 				//-------------------------------
 				// SendAsync....
 				// Message Queue에 넣어두기... (보내는 byte[]가 반드시 다른 버퍼)
 				//-------------------------------
 				_token.SendCode(Encoding.ASCII.GetBytes(_text), _debugWorkNum);
 
-
 				//-------------------------------
 				//ReceiveAsync...
 				//-------------------------------
-				bool _bReceiveAsync = _clientSocket.ReceiveAsync(_receiveArgs);
-				if (_bReceiveAsync == false)
+				bool _isReceiveAsync = _clientSocket.ReceiveAsync(_receiveArgs);
+				if(_isReceiveAsync == false)
 				{
 					//fail -> client socket is error
 					Debug.Log($" [{_identityID}/{_debugWorkNum}]OnReceiveAsync .ReceiveAsync 재등록후(소켓꺼짐) "
 						+ $"{_token.socket.Connected}/{_receiveArgs.BytesTransferred}"
 						+ $"/{_receiveArgs.LastOperation}/{_receiveArgs.SocketError}");
 
-					if(_token.socket.Connected == false)
+					if (_token.socket.Connected == false)
 					{
 						Debug.Log(" >> Disconnect ");
 						Disconnect("[정상종료2]", _token);
@@ -210,20 +209,20 @@ namespace TimeServer20
 				//error 
 				Debug.Log($"[{_identityID}/{_debugWorkNum}]OnReceiveAsync [정상종료] >>> "
 					+ $"{_token.socket.Connected} / {_receiveArgs.BytesTransferred} : {_receiveArgs.LastOperation} : {_receiveArgs.SocketError}");
-
 				Disconnect("[정상종료1]", _token);
 			}
 		}
 
-		void OnSendAsync(object _obj, SocketAsyncEventArgs _sendArgs)
+		void OnSendAsync(Object _obj, SocketAsyncEventArgs _sendArgs)
 		{
-			CUserToken _token = _sendArgs.UserToken as CUserToken;
-			int _identityID = _token.identityID;
-			int _debugWorkNum = _token.GetWorkNum();
+			CUserToken _token	= _sendArgs.UserToken as CUserToken;
+			int _identityID		= _token.identityID;
+			int _debugWorkNum	= _token.GetWorkNum();
 			if (Protocol.DEBUG)
 				Debug.Log($"[{_identityID}/{_debugWorkNum}]OnSendAsync (callback) \n   >> socket:{_token.socket.Connected} BytesTransferred:{_sendArgs.BytesTransferred} LastOperation:{_sendArgs.LastOperation} SocketError:{_sendArgs.SocketError}");
 
-			if (_sendArgs.LastOperation == SocketAsyncOperation.Send
+
+			if(_sendArgs.LastOperation == SocketAsyncOperation.Send
 				&& _sendArgs.SocketError == SocketError.Success
 				&& _sendArgs.BytesTransferred > 0)
 			{
@@ -251,6 +250,7 @@ namespace TimeServer20
 			Debug.Log($" [{_token.identityID}] release {_msg} free:{list_Pool.Count} use:{list_Users.Count}");
 			_token.OnRemoved();
 		}
+
 	}
 
 	class CUserToken
@@ -268,11 +268,11 @@ namespace TimeServer20
 			receiveArgs.UserToken	= this;
 			receiveArgs.SetBuffer(receiveBuffer, 0, receiveBuffer.Length);
 
-			sendBuffer			= new byte[1024];
-			sendBuffer2			= new byte[1024];
-			sendArgs			= new SocketAsyncEventArgs();
-			sendArgs.Completed	+= _onSendAsync;
-			sendArgs.UserToken = this;
+			sendBuffer				= new byte[1024];
+			sendBuffer2				= new byte[1024];
+			sendArgs				= new SocketAsyncEventArgs();
+			sendArgs.Completed		+= _onSendAsync;
+			sendArgs.UserToken		= this;
 			sendArgs.SetBuffer(sendBuffer, 0, sendBuffer.Length);
 		}
 
@@ -280,14 +280,20 @@ namespace TimeServer20
 		{
 			identityID	= -1;
 			workNum		= -1;
+			try
+			{
+				socket.Disconnect(false);
+			}
+			catch (Exception _e)
+			{
+			}
+			finally{
+				socket.Close();
+			}
 			socket		= null;
 		}
 
-		public void SetSocket(Socket _s)
-		{
-			socket = _s;
-		}
-
+		public void SetSocket(Socket _s) { socket = _s; }
 		public int GetWorkNum()
 		{
 			Interlocked.Increment(ref workNum);
@@ -302,9 +308,9 @@ namespace TimeServer20
 
 			lock (sendQueue)
 			{
-				bool _bSending = sendQueue.Count > 0;
+				bool _isSending = sendQueue.Count > 0;
 				sendQueue.Enqueue(_data);
-				if (_bSending)
+				if (_isSending)
 				{
 					//전송중이시네요.... 입력만 해두기....
 				}
@@ -335,7 +341,7 @@ namespace TimeServer20
 			}
 		}
 
-		public void SendCode_Sending(int _debugWorkNum = -1)
+		public void SendCode_Sending(int _debugWorkNum)
 		{
 			//보낼 메세지를 sendArgs에 복사해서 보내기 등록을 한다...
 			if (Protocol.DEBUG_PACKET)
@@ -345,8 +351,8 @@ namespace TimeServer20
 			Buffer.BlockCopy(_data, 0, sendArgs.Buffer, sendArgs.Offset, _data.Length);
 			sendArgs.SetBuffer(sendArgs.Offset, _data.Length);
 
-			bool _bSendAsync = socket.SendAsync(sendArgs);
-			if(_bSendAsync == false)
+			bool _isSendAsync = socket.SendAsync(sendArgs);
+			if(_isSendAsync == false)
 			{
 				// 보내기 등록 오류는 .... (socket killed) 
 				// 1. 큐만 클리어해주고....
