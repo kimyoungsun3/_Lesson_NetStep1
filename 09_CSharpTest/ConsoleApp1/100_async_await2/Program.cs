@@ -16,7 +16,6 @@ namespace _100_async_await2
 			Thread.Sleep(5000);
 
 			_p.Run2();
-
 			Console.ReadLine();
 		}
 

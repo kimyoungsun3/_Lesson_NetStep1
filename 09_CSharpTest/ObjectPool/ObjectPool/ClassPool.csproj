@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B5608249-F69F-412C-B676-C072D07FEA82}</ProjectGuid>
+    <ProjectGuid>{3F49377E-8E10-418A-B7FC-0A4575B9181E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>MultiThread</RootNamespace>
-    <AssemblyName>MultiThread</AssemblyName>
+    <RootNamespace>ObjectPool</RootNamespace>
+    <AssemblyName>ObjectPool</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -40,12 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassPoolD.cs" />
+    <Compile Include="ClassPoolEmpty_Test.cs" />
     <Compile Include="Constant.cs" />
+    <Compile Include="Debug.cs" />
+    <Compile Include="ClassPoolD_Test.cs" />
+    <Compile Include="ClassPoolNew_Test.cs" />
+    <Compile Include="ClassPoolT.cs" />
+    <Compile Include="ClassPoolD.cs" />
+    <Compile Include="ClassPoolT_Test.cs" />
+    <Compile Include="PackData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThreadTest1.cs" />
-    <Compile Include="ThreadTest2.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
